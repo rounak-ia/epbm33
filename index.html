@@ -11,7 +11,7 @@
 <meta property="og:title" content="EPBM Batch 33 | IIM Calcutta Cohort Dashboard">
 <meta property="og:description" content="Where we are based, where we come from and what we bring. IIM Calcutta, Executive Programme in Business Management, Batch 33.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://rounak-ia.github.io/epbm33-snapshot/">
+<meta property="og:url" content="https://rounak-ia.github.io/epbm33/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23F5B800'/%3E%3Ctext x='50' y='68' font-size='56' font-family='Arial' font-weight='700' text-anchor='middle' fill='%231E2733'%3E33%3C/text%3E%3C/svg%3E">
 <script>
 /* Logo fallback: try the backup address first, then show the name as text */
@@ -144,10 +144,14 @@ function logoFallback(img){
   footer{border-top:1px solid var(--line);padding:28px 0 36px;color:var(--muted);font-size:14.5px;line-height:1.6}
   footer strong{color:var(--ink);font-weight:600}
   footer p{margin:0 0 6px}
-  .foot-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px 40px}   /* same columns as the hero, so the footer lines up with it */
-  .foot-title{color:var(--ink);font-weight:600;font-size:15px;margin-bottom:6px !important}
-  .privacy{align-self:start;border-left:4px solid var(--taxi);padding-left:16px}
-  .about a{white-space:nowrap}
+  .foot-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:20px 40px}   /* same columns as the hero, so the footer lines up with it */
+  .foot-right{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:20px}
+  .fcard{background:#fff;border:1px solid var(--line);border-radius:4px;padding:16px 18px}                /* equal height: the grid stretches all three */
+  .fcard p:last-child{margin-bottom:0}
+  .fcard.privacy{border-left:4px solid var(--taxi)}
+  .foot-title{color:var(--ink);font-weight:600;font-size:15px;line-height:1.35;margin-bottom:8px !important;text-wrap:balance}
+  .fine{font-size:13px;color:#667180}
+  .nb{white-space:nowrap}
   .foot-base{display:block;margin-top:22px;padding-top:16px;position:relative;font-size:13.5px}
   .foot-base::before{content:"";position:absolute;top:0;left:20px;right:20px;height:1px;background:var(--line)}
   noscript p{margin:0;padding:14px 20px;background:#FFF4D1;color:var(--ink);text-align:center}
@@ -169,7 +173,7 @@ function logoFallback(img){
     .row.dom{grid-template-columns:minmax(100px,34%) 1fr 112px}
     .legend{flex-wrap:wrap}
     .legend .note{margin-left:0;flex-basis:100%}
-    .foot-grid{grid-template-columns:1fr}
+    .foot-grid,.foot-right{grid-template-columns:1fr}
     .person{display:block;padding:14px 0}
     .person.head{display:none}
     .porg,.pcity{display:inline}
@@ -316,14 +320,20 @@ function logoFallback(img){
 
 <footer>
   <div class="wrap foot-grid">
-    <div class="about">
+    <div class="fcard about">
       <p class="foot-title">About this page</p>
-      <p>Built by <strong>Rounak Roy</strong> - Data Scientist from Bangalore. An unofficial batch page, not run by IIM Calcutta or TimesPro.</p>
-      <p>Suggestions for improvement are always welcome. <a href="https://wa.me/917278432052" target="_blank" rel="noopener noreferrer">Message me on WhatsApp</a>.</p>
+      <p>Built by <strong>Rounak Roy</strong> - Data Scientist from Bangalore.</p>
+      <p class="fine">An unofficial batch page, not run by IIM Calcutta or TimesPro.</p>
     </div>
-    <div class="privacy" role="note">
-      <p class="foot-title">Please keep this link within Batch 33</p>
-      <p>This page lists members' contact details. Security is a shared responsibility.</p>
+    <div class="foot-right">
+      <div class="fcard">
+        <p class="foot-title">Feedback</p>
+        <p>Suggestions for improvement are <span class="nb">always welcome.&nbsp;<a href="https://wa.me/917278432052" target="_blank" rel="noopener noreferrer">WhatsApp</a></span></p>
+      </div>
+      <div class="fcard privacy" role="note">
+        <p class="foot-title">Please keep this link within Batch&nbsp;33</p>
+        <p>This page lists members' contact details. Security is a shared responsibility.</p>
+      </div>
     </div>
   </div>
   <div class="wrap foot-base">
@@ -824,7 +834,7 @@ async function load(){
   fillCityFilter(); renderDirectory();
   const bd=$("dirBadge"); bd.textContent=DIR.length; bd.hidden=!DIR.length;
   $("nudge").hidden=!DIR.length;
-  $("foot").textContent="Updated "+new Date().toLocaleString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})+". Refreshes automatically.";
+  $("foot").textContent="Updated "+new Date().toLocaleString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})+".";
 }
 let rt; const redraw=()=>{ clearTimeout(rt); rt=setTimeout(()=>renderMap(shown),120); };
 if(window.ResizeObserver) new ResizeObserver(redraw).observe($("mapSvg")); else window.addEventListener("resize",redraw);
