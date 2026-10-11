@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPBM Batch 33 | Cohort Snapshot</title>
+<meta name="description" content="A live snapshot of IIM Calcutta EPBM Batch 33: where we are based, where we come from and what we bring.">
+<meta property="og:title" content="EPBM Batch 33 | Cohort Snapshot">
+<meta property="og:description" content="Where we are based, where we come from and what we bring. IIM Calcutta EPBM Batch 33.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23F5B800'/%3E%3Ctext x='50' y='68' font-size='56' font-family='Arial' font-weight='700' text-anchor='middle' fill='%231E2733'%3E33%3C/text%3E%3C/svg%3E">
+<script>
+function logoFallback(img){
+  var next = img.getAttribute("data-fallback");
+  if(next){ img.removeAttribute("data-fallback"); img.src = next; return; }
+  var w = document.createElement("span"); w.className = "wordmark"; w.textContent = img.alt;
+  img.replaceWith(w);
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1E2733;      /* Howrah Bridge steel */
+    --paper:#F6F8FB;
+    --tram:#1F5FA8;     /* Kolkata tram blue */
+    --taxi:#F5B800;     /* Kolkata taxi yellow */
+    --muted:#586474;
+    --line:#D5DCE5;
+    --track:#E4E9F0;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,.big{font-family:'Source Serif 4',Georgia,'Times New Roman',serif;letter-spacing:-0.01em}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  a{color:var(--tram)}
+  :focus-visible{outline:3px solid var(--tram);outline-offset:2px}
+
+  .banner{background:var(--ink);color:#fff;font-size:14px;padding:8px 0}
+  .banner .wrap{display:flex;gap:10px;align-items:center}
+  .banner b{background:var(--taxi);color:var(--ink);padding:1px 8px;border-radius:3px;font-weight:600}
+  .banner[hidden]{display:none}
+
+  .hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;padding:36px 20px 36px;align-items:stretch}
+  .topbar{background:#fff;border-bottom:1px solid var(--line)}
+  .topbar-in{display:flex;align-items:center;gap:24px;min-height:112px;padding-top:12px;padding-bottom:12px}
+  .logo{display:flex;align-items:center}
+  .logo img{display:block;height:62px;width:auto;max-width:260px;object-fit:contain}
+  .logo.iimc img{height:86px}
+  .wordmark{font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:22px;color:var(--ink)}
+  .vr{width:1px;height:56px;background:var(--line)}
+  h1{font-size:clamp(30px,4vw,46px);line-height:1.12;margin:0 0 16px;font-weight:700;max-width:16em}
+  .batch{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 20px}
+  .batch strong{font-family:'Source Serif 4',Georgia,serif;font-size:30px;line-height:1;color:var(--tram);font-weight:700}
+  .batch span{color:var(--muted);font-size:15px}
+  .lede{font-size:18px;max-width:30em;margin:0 0 26px;min-height:1.6em}
+  .countdown{display:inline-flex;align-items:center;gap:18px;border-left:4px solid var(--taxi);padding:6px 0 6px 18px}
+  .countdown .big{font-size:54px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}
+  .cdtext{display:flex;flex-direction:column;font-size:14.5px;color:var(--muted);line-height:1.4}
+  .cdtext strong{color:var(--ink);font-size:16px;font-weight:600}
+  .mapcol{display:flex;flex-direction:column;min-height:460px}
+  #map{flex:1;min-height:440px;border-radius:6px;border:1px solid var(--line);background:#EDF2F8;overflow:hidden}
+  #map svg{display:block;width:100%;height:100%}
+  #map text{font-family:'Public Sans',system-ui,sans-serif}
+  .maplegend{font-size:13.5px;color:var(--muted);margin:8px 0 0}
+  .dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--taxi);border:2px solid var(--ink);vertical-align:-1px;margin-right:4px}
+  .ring{display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid var(--tram);vertical-align:-1px;margin:0 4px 0 12px}
+
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 60px;padding:12px 0 48px}
+  section{border-top:2px solid var(--ink);padding-top:14px;min-width:0}
+  section.wide{grid-column:1/-1}
+  h2{font-size:23px;margin:0 0 4px;font-weight:700}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 14px;min-height:1.5em}
+  .legend{display:flex;gap:18px;font-size:13.5px;color:var(--muted);margin:0 0 8px}
+  .sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:6px}
+
+  .row{display:grid;grid-template-columns:minmax(130px,42%) 1fr 34px;gap:12px;align-items:center;padding:4px 0;font-size:14.5px}
+  .lab{line-height:1.25;overflow-wrap:anywhere}
+  .track{display:flex;height:12px;background:var(--track);border-radius:2px;overflow:hidden}
+  .fill{height:100%;background:var(--tram);width:0;transition:width .8s cubic-bezier(.2,.7,.2,1)}
+  .fill.alt{background:var(--taxi)}
+  .fill.others{background:#9AA5B4}
+  .cnt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0;padding:0;list-style:none}
+  .chips li{border:1px solid var(--ink);border-radius:999px;padding:3px 12px;font-size:14px;background:#fff}
+  .chips b{margin-left:6px;color:var(--tram)}
+  .empty{color:var(--muted);font-style:italic}
+
+  footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--muted);font-size:14px}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer strong{color:var(--ink);font-weight:600}
+
+
+  [hidden]{display:none !important}
+  .sr{position:absolute;left:-9999px}
+  .tabs{display:flex;gap:4px;border-bottom:2px solid var(--ink);margin-bottom:28px}
+  .tab{font:600 16px 'Public Sans',system-ui,sans-serif;background:none;border:0;padding:10px 20px;cursor:pointer;color:var(--muted);border-radius:4px 4px 0 0}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .dirtools{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 10px}
+  .dirtools input,.dirtools select{font:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--ink);border-radius:4px;background:#fff;color:var(--ink)}
+  .dirtools input{flex:1;min-width:220px}
+  .dirlist{margin-bottom:56px}
+  .person{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.5fr) minmax(0,2.2fr);gap:16px;padding:12px 0;border-bottom:1px solid var(--line);align-items:start;font-size:14.5px}
+  .person.head{font-weight:600;color:var(--muted);font-size:13.5px;border-bottom:2px solid var(--ink);padding-top:4px}
+  .pname strong{display:block;font-weight:600}
+  .prole{color:var(--muted);font-size:13.5px}
+  .pcontact a{display:block;font-weight:500;overflow-wrap:anywhere}
+  @media (max-width:860px){
+    .person{grid-template-columns:1fr;gap:2px;padding:14px 0}
+    .person.head{display:none}
+  }
+
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr;padding-top:28px}
+    .grid{grid-template-columns:1fr;gap:34px}
+    #map{min-height:360px}
+    .row{grid-template-columns:minmax(100px,40%) 1fr 30px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .fill{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="banner" id="demoBanner" hidden>
+  <div class="wrap"><b>Notice</b><span id="demoMsg"></span></div>
+</div>
+
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <span class="logo iimc"><img src="iimc-logo.png" data-fallback="https://www.iimcal.ac.in/sites/default/files/logo.png" alt="IIM Calcutta" onerror="logoFallback(this)"></span>
+    <span class="vr" aria-hidden="true"></span>
+    <span class="logo tp"><img src="timespro-logo.png" alt="TimesPro" onerror="logoFallback(this)"></span>
+  </div>
+</div>
+
+<header class="wrap hero">
+  <div>
+    <h1>IIM Calcutta, Executive Programme in Business Management</h1>
+    <p class="batch"><strong>Batch 33</strong><span>In collaboration with TimesPro</span></p>
+    <p class="lede" id="lede">Loading our cohort...</p>
+    <div class="countdown" id="plate" aria-live="polite">
+      <span class="big" id="days">--</span>
+      <span class="cdtext"><strong id="plateTitle">days until we meet in Kolkata</strong><span>First in-person week, 28 Nov to 2 Dec 2026</span></span>
+    </div>
+  </div>
+  <div class="mapcol">
+    <div id="map"></div>
+    <p class="maplegend"><span class="dot"></span>Where we are based (bigger means more of us)<span class="ring"></span>Kolkata, where we meet</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="tabSnap" aria-selected="true" aria-controls="panelSnap">At a glance</button>
+    <button class="tab" role="tab" id="tabDir" aria-selected="false" aria-controls="panelDir">Who's who</button>
+  </div>
+  <div id="panelSnap" role="tabpanel" aria-labelledby="tabSnap">
+  <p class="empty" id="emptyMsg" hidden style="margin:8px 0 56px;font-size:17px">Charts will appear here as soon as the first responses come in.</p>
+  <div class="grid" id="grid">
+    <section>
+      <h2>Where we live</h2>
+      <p class="sub" id="subCity"></p>
+      <div id="chCity"></div>
+    </section>
+    <section>
+      <h2>Where we are from</h2>
+      <p class="sub" id="subHome"></p>
+      <div id="chHome"></div>
+    </section>
+
+    <section class="wide">
+      <h2>The domains we have worked in</h2>
+      <p class="sub" id="subDomain"></p>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--tram)"></i>Current domain</span>
+        <span><i class="sw" style="background:var(--taxi)"></i>Also worked in</span>
+      </div>
+      <div id="chDomain"></div>
+    </section>
+
+    <section>
+      <h2>What we do</h2>
+      <p class="sub" id="subProf"></p>
+      <div id="chProf"></div>
+    </section>
+    <section>
+      <h2>Our core functions</h2>
+      <p class="sub" id="subFunc"></p>
+      <div id="chFunc"></div>
+    </section>
+
+    <section>
+      <h2>Where we started</h2>
+      <p class="sub" id="subEdu"></p>
+      <div id="chEdu"></div>
+    </section>
+    <section>
+      <h2>Years of experience</h2>
+      <p class="sub" id="subExp"></p>
+      <div id="chExp"></div>
+    </section>
+
+    <section class="wide">
+      <h2>Getting to Kolkata</h2>
+      <p class="sub" id="subTravel"></p>
+      <div id="chTravel"></div>
+      <p class="sub" style="margin-top:14px">Travelling in from</p>
+      <ul class="chips" id="chipsFrom"></ul>
+    </section>
+  </div>
+  </div>
+
+  <div id="panelDir" role="tabpanel" aria-labelledby="tabDir" hidden>
+    <h2>Who's who in Batch 33</h2>
+    <p class="sub" id="dirCount"></p>
+    <div class="dirtools">
+      <label class="sr" for="dirQ">Search members</label>
+      <input id="dirQ" type="search" placeholder="Search by name, organisation, designation, city or domain">
+      <label class="sr" for="dirCity">Filter by city</label>
+      <select id="dirCity"><option value="">All cities</option></select>
+    </div>
+    <div class="dirlist" id="dirList"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Built by <strong>Rounak Roy</strong>. An unofficial batch page, not run by IIM Calcutta or TimesPro.</span>
+    <span id="foot"></span>
+  </div>
+</footer>
+
+<script>
+/* ============================== SETUP: paste your two links ============================== */
+const CSV_URL     = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTtmchIC6jfVtprOCu1o19EixEvJRy8Gi-_W8L7uyu7bOL0OMIgDfhaYbkFBmzOjtsNc6xEI_zo7FZ4/pub?gid=2027566124&single=true&output=csv";  // published CSV link of the "Public" tab    (drives the Snapshot)
+const DIR_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTtmchIC6jfVtprOCu1o19EixEvJRy8Gi-_W8L7uyu7bOL0OMIgDfhaYbkFBmzOjtsNc6xEI_zo7FZ4/pub?gid=631897875&single=true&output=csv";  // published CSV link of the "Directory" tab (drives the Directory)
+/* ========================================================================================= */
+
+const MEET_START = new Date("2026-11-28T00:00:00+05:30");
+const MEET_END   = new Date("2026-12-03T00:00:00+05:30");
+const REFRESH_MS = 5 * 60 * 1000;
+const EXP_ORDER = ["Under 7 years","7 to 10 years","10 to 15 years","15 to 20 years","20+ years"];
+const TRAVEL_ORDER = ["Flying in","Train / road","I am based in Kolkata","Not sure yet"];
+
+/* ---------- City lookup: [display name, lat, lon, aliases] ---------- */
+const CITY_LIST = [
+  ["Bengaluru",12.9716,77.5946,["bangalore","blr","bengalooru"]],["Mumbai",19.0760,72.8777,["bombay"]],
+  ["Delhi",28.6139,77.2090,["new delhi","delhi ncr","ncr","south delhi","north delhi"]],["Gurugram",28.4595,77.0266,["gurgaon"]],
+  ["Noida",28.5355,77.3910,["greater noida"]],["Ghaziabad",28.6692,77.4538,[]],["Faridabad",28.4089,77.3178,[]],
+  ["Hyderabad",17.3850,78.4867,["hyd","secunderabad"]],["Chennai",13.0827,80.2707,["madras"]],
+  ["Kolkata",22.5726,88.3639,["calcutta","kolkatta","howrah"]],["Pune",18.5204,73.8567,["poona"]],
+  ["Ahmedabad",23.0225,72.5714,["gandhinagar"]],["Jaipur",26.9124,75.7873,[]],["Lucknow",26.8467,80.9462,[]],
+  ["Kanpur",26.4499,80.3319,[]],["Chandigarh",30.7333,76.7794,[]],["Mohali",30.7046,76.7179,[]],["Panchkula",30.6942,76.8606,[]],
+  ["Indore",22.7196,75.8577,[]],["Bhopal",23.2599,77.4126,[]],["Nagpur",21.1458,79.0882,[]],["Surat",21.1702,72.8311,[]],
+  ["Vadodara",22.3072,73.1812,["baroda"]],["Kochi",9.9312,76.2673,["cochin","ernakulam"]],
+  ["Thiruvananthapuram",8.5241,76.9366,["trivandrum"]],["Coimbatore",11.0168,76.9558,[]],
+  ["Visakhapatnam",17.6868,83.2185,["vizag"]],["Vijayawada",16.5062,80.6480,[]],["Bhubaneswar",20.2961,85.8245,["bhubaneshwar"]],
+  ["Cuttack",20.4625,85.8830,[]],["Patna",25.5941,85.1376,[]],["Ranchi",23.3441,85.3096,[]],["Guwahati",26.1445,91.7362,[]],
+  ["Jamshedpur",22.8046,86.2029,[]],["Durgapur",23.5204,87.3119,[]],["Siliguri",26.7271,88.3953,[]],["Raipur",21.2514,81.6296,[]],
+  ["Dehradun",30.3165,78.0322,[]],["Mysuru",12.2958,76.6394,["mysore"]],["Mangaluru",12.9141,74.8560,["mangalore"]],
+  ["Nashik",19.9975,73.7898,[]],["Thane",19.2183,72.9781,[]],["Navi Mumbai",19.0330,73.0297,[]],["Goa",15.4909,73.8278,["panaji","panjim"]],
+  ["Madurai",9.9252,78.1198,[]],["Varanasi",25.3176,82.9739,["banaras"]],["Agra",27.1767,78.0081,[]],["Jodhpur",26.2389,73.0243,[]],
+  ["Udaipur",24.5854,73.7125,[]],["Amritsar",31.6340,74.8723,[]],["Ludhiana",30.9010,75.8573,[]],["Hubballi",15.3647,75.1240,["hubli"]],
+  ["Belagavi",15.8497,74.4977,["belgaum"]],["Rourkela",22.2604,84.8536,[]],["Bokaro",23.6693,86.1511,[]],["Dhanbad",23.7957,86.4304,[]],
+  ["Dubai",25.2048,55.2708,[]],["Abu Dhabi",24.4539,54.3773,[]],["Singapore",1.3521,103.8198,[]],["London",51.5074,-0.1278,[]],
+  ["New York",40.7128,-74.0060,["nyc"]],["San Francisco",37.7749,-122.4194,["bay area","sf","san jose","sunnyvale"]],
+  ["Toronto",43.6532,-79.3832,[]],["Sydney",-33.8688,151.2093,[]],["Melbourne",-37.8136,144.9631,[]],["Doha",25.2854,51.5310,[]],
+  ["Riyadh",24.7136,46.6753,[]],["Muscat",23.5880,58.3829,[]],["Kuwait City",29.3759,47.9774,[]],["Hong Kong",22.3193,114.1694,[]],
+  ["Tokyo",35.6762,139.6503,[]],["Frankfurt",50.1109,8.6821,[]],["Amsterdam",52.3676,4.9041,[]],["Paris",48.8566,2.3522,[]],
+  ["Dublin",53.3498,-6.2603,[]],["Kuala Lumpur",3.1390,101.6869,[]],["Bangkok",13.7563,100.5018,[]],["Seattle",47.6062,-122.3321,[]],
+  ["Dallas",32.7767,-96.7970,[]],["Houston",29.7604,-95.3698,[]],["Chicago",41.8781,-87.6298,[]],["Austin",30.2672,-97.7431,[]],
+  ["Boston",42.3601,-71.0589,[]],["Zurich",47.3769,8.5417,[]],["Munich",48.1351,11.5820,[]],["Dhaka",23.8103,90.4125,[]],
+  ["Kathmandu",27.7172,85.3240,[]],["Colombo",6.9271,79.8612,[]]
+];
+const CITY_INDEX = {};
+CITY_LIST.forEach(c => { CITY_INDEX[c[0].toLowerCase()] = c; c[3].forEach(a => CITY_INDEX[a] = c); });
+
+function titleCase(s){ return s.replace(/\w\S*/g, w => w[0].toUpperCase() + w.slice(1).toLowerCase()); }
+function canonCity(raw){
+  const s = (raw || "").trim().toLowerCase().split(/[,\/(\-]/)[0].replace(/\./g,"").replace(/\s+/g," ").trim();
+  if(!s) return null;
+  const hit = CITY_INDEX[s];
+  return hit ? { name: hit[0], lat: hit[1], lon: hit[2] } : { name: titleCase(s), lat: null, lon: null };
+}
+
+/* ---------- CSV ---------- */
+function parseCSV(t){
+  const rows=[]; let row=[], f="", q=false;
+  for(let i=0;i<t.length;i++){
+    const c=t[i];
+    if(q){ if(c==='"'){ if(t[i+1]==='"'){f+='"';i++;} else q=false; } else f+=c; }
+    else if(c==='"') q=true;
+    else if(c===','){ row.push(f); f=""; }
+    else if(c==='\n'||c==='\r'){ if(c==='\r'&&t[i+1]==='\n') i++; row.push(f); rows.push(row); row=[]; f=""; }
+    else f+=c;
+  }
+  if(f!==""||row.length){ row.push(f); rows.push(row); }
+  return rows;
+}
+function splitMulti(s){
+  return (s||"").replace("None, only my primary domain","").split(",").map(x=>x.trim()).filter(Boolean);
+}
+/* Public tab column order: profession, city, hometown, education, primary domain, also worked in, function, experience, travel */
+function toRecords(rows){
+  return rows.slice(1).filter(r => r.some(x => (x||"").trim())).map(r => ({
+    prof:(r[0]||"").trim(), city:canonCity(r[1]), home:canonCity(r[2]), edu:(r[3]||"").trim(),
+    domain:(r[4]||"").trim(), also:splitMulti(r[5]), func:(r[6]||"").trim(),
+    exp:(r[7]||"").trim(), travel:(r[8]||"").trim()
+  }));
+}
+
+/* ---------- Helpers ---------- */
+function countBy(list){
+  const m=new Map();
+  list.forEach(v=>{ if(v) m.set(v,(m.get(v)||0)+1); });
+  return [...m.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0]));
+}
+function topN(entries,n){
+  if(entries.length<=n) return entries;
+  const rest=entries.slice(n).reduce((s,e)=>s+e[1],0);
+  return entries.slice(0,n).concat([["Others ("+(entries.length-n)+" more)",rest]]);
+}
+function pct(n,d){ return d? Math.round(n*100/d) : 0; }
+
+function bars(el, entries){
+  el.innerHTML="";
+  if(!entries.length){ el.innerHTML='<p class="empty">No answers yet.</p>'; return; }
+  const isOther=e=>String(e[0]).indexOf("Others (")===0;
+  const max=Math.max(1,...entries.filter(e=>!isOther(e)).map(e=>e[1]+(e[2]||0)));
+  entries.forEach(([label,a,b])=>{
+    const row=document.createElement("div"); row.className="row";
+    const total=a+(b||0);
+    row.title = b!==undefined ? `${label}: ${a} current, ${b} also worked in` : `${label}: ${a}`;
+    const l=document.createElement("span"); l.className="lab"; l.textContent=label;
+    const t=document.createElement("span"); t.className="track";
+    const f=document.createElement("span"); f.className="fill"+(isOther([label])?" others":""); f.dataset.w=Math.min(100,a/max*100)+"%"; t.appendChild(f);
+    if(b){ const f2=document.createElement("span"); f2.className="fill alt"; f2.dataset.w=(b/max*100)+"%"; t.appendChild(f2); }
+    const c=document.createElement("span"); c.className="cnt"; c.textContent=total;
+    row.append(l,t,c); el.appendChild(row);
+  });
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.querySelectorAll(".fill").forEach(f=>f.style.width=f.dataset.w)));
+}
+
+/* ---------- Map: self-drawn SVG, no external tiles ---------- */
+const INTL = new Set(["Dubai","Abu Dhabi","Singapore","London","New York","San Francisco","Toronto","Sydney","Melbourne","Doha","Riyadh","Muscat","Kuwait City","Hong Kong","Tokyo","Frankfurt","Amsterdam","Paris","Dublin","Kuala Lumpur","Bangkok","Seattle","Dallas","Houston","Chicago","Austin","Boston","Zurich","Munich","Dhaka","Kathmandu","Colombo"]);
+const MAP_GROUP = {"Gurugram":"Delhi NCR","Noida":"Delhi NCR","Ghaziabad":"Delhi NCR","Faridabad":"Delhi NCR","Delhi":"Delhi NCR",
+  "Navi Mumbai":"Mumbai","Thane":"Mumbai","Mohali":"Chandigarh","Panchkula":"Chandigarh"};
+const GROUP_POS = {"Delhi NCR":[28.6139,77.2090]};
+const INDIA = [[73.6,35.6],[74.4,36.9],[75.6,37.0],[76.8,35.9],[77.8,35.5],[78.9,35.5],[80.3,35.2],[79.9,34.2],[79.2,33.1],[78.8,32.3],[78.6,31.6],[79.1,31.0],[80.2,30.3],[80.9,30.1],[81.0,29.7],[80.3,29.1],[80.1,28.8],[81.0,28.3],[82.0,27.9],[83.3,27.4],[84.6,27.1],[85.8,26.6],[87.3,26.4],[88.1,26.4],[88.2,27.0],[88.1,27.9],[88.9,28.1],[88.9,27.3],[88.8,26.9],[89.8,26.7],[91.0,26.8],[92.0,26.9],[91.7,27.8],[92.7,28.0],[93.6,28.7],[95.1,29.3],[96.1,29.4],[97.3,28.3],[98.0,27.6],[97.4,27.0],[96.3,27.2],[96.0,26.5],[95.3,26.0],[94.6,25.2],[94.6,24.0],[94.0,23.0],[93.4,22.8],[93.1,22.3],[92.9,23.3],[92.4,23.6],[91.6,23.0],[91.3,24.1],[92.2,24.5],[91.6,25.1],[90.3,25.2],[89.9,25.5],[89.8,26.0],[89.0,26.4],[88.5,26.3],[88.4,25.8],[88.2,25.3],[88.4,24.6],[88.7,24.2],[88.7,23.5],[89.0,22.9],[88.9,21.9],[88.4,21.6],[87.2,21.5],[86.9,20.9],[86.7,20.3],[85.9,19.8],[85.0,19.2],[84.2,18.4],[83.3,17.6],[82.3,16.6],[81.3,16.2],[80.4,15.8],[80.1,14.4],[80.3,13.3],[80.1,12.4],[79.8,11.9],[79.8,10.9],[79.3,10.3],[79.3,9.2],[78.2,8.9],[77.6,8.1],[77.0,8.4],[76.4,9.4],[75.9,11.0],[75.0,12.5],[74.7,13.8],[74.1,15.0],[73.8,16.0],[73.3,17.6],[72.8,19.0],[72.7,20.5],[72.8,21.2],[72.5,22.2],[72.1,21.8],[71.3,20.9],[70.4,20.7],[69.1,22.0],[69.9,22.4],[70.4,22.9],[69.5,22.8],[68.6,23.1],[68.2,23.8],[69.0,24.3],[70.4,24.2],[71.1,24.4],[70.1,25.1],[70.0,26.0],[69.6,26.9],[70.6,28.0],[71.9,27.9],[72.9,29.0],[73.4,29.9],[74.4,31.0],[74.6,31.7],[75.0,32.4],[75.3,32.9],[74.6,33.1],[74.0,33.6],[74.0,34.2],[73.5,34.9]];
+const ISLANDS = [[[92.3,13.4],[93.0,13.5],[93.1,12.0],[92.9,10.8],[92.5,11.3]],[[93.6,8.9],[93.9,7.2],[93.5,6.9],[93.4,8.0]]];
+const MAP_W=780, MAP_H=560, MS=17.4, MKX=0.927, MX0=22, MY0=14, MLON0=68, MLAT0=37.4;
+const mx=lon=>MX0+(lon-MLON0)*MS*MKX, my=lat=>MY0+(MLAT0-lat)*MS;
+const SVGNS="http://www.w3.org/2000/svg";
+function se(name,attrs,text){
+  const e=document.createElementNS(SVGNS,name);
+  for(const k in (attrs||{})) e.setAttribute(k,attrs[k]);
+  if(text!==undefined) e.textContent=text;
+  return e;
+}
+function pathOf(poly){ return poly.map((p,i)=>(i?"L":"M")+mx(p[0]).toFixed(1)+" "+my(p[1]).toFixed(1)).join("")+"Z"; }
+
+function renderMap(recs){
+  const host=document.getElementById("map"); host.innerHTML="";
+  const svg=se("svg",{viewBox:`0 0 ${MAP_W} ${MAP_H}`,preserveAspectRatio:"xMidYMid meet",role:"img"});
+  svg.setAttribute("aria-label","Map of the cities where Batch 33 members are based");
+  // graticule
+  for(let lat=10;lat<=35;lat+=5) svg.appendChild(se("line",{x1:0,x2:MAP_W,y1:my(lat),y2:my(lat),stroke:"#DCE4EE","stroke-width":1}));
+  for(let lon=70;lon<=95;lon+=5) svg.appendChild(se("line",{y1:0,y2:MAP_H,x1:mx(lon),x2:mx(lon),stroke:"#DCE4EE","stroke-width":1}));
+  // India
+  svg.appendChild(se("path",{d:pathOf(INDIA),fill:"#FFFFFF",stroke:"#A9B7C9","stroke-width":1.4,"stroke-linejoin":"round"}));
+  ISLANDS.forEach(i=>svg.appendChild(se("path",{d:pathOf(i),fill:"#FFFFFF",stroke:"#A9B7C9","stroke-width":1.2})));
+
+  // aggregate
+  const inIndia=new Map(), abroad=new Map(); let unmapped=0;
+  recs.forEach(r=>{
+    const c=r.city; if(!c) return;
+    if(c.lat===null){ unmapped++; return; }
+    if(INTL.has(c.name)){ abroad.set(c.name,(abroad.get(c.name)||0)+1); return; }
+    const g=MAP_GROUP[c.name]||c.name;
+    const pos=GROUP_POS[g]||[c.lat,c.lon];
+    const e=inIndia.get(g)||{name:g,lat:pos[0],lon:pos[1],n:0}; e.n++; inIndia.set(g,e);
+  });
+
+  // Kolkata marker (venue)
+  const kx=mx(88.3639), ky=my(22.5726);
+  svg.appendChild(se("circle",{cx:kx,cy:ky,r:26,fill:"none",stroke:"#1F5FA8","stroke-width":2.5,"stroke-dasharray":"5 4"}));
+
+  // bubbles, biggest first so small ones stay on top
+  const pts=[...inIndia.values()].sort((a,b)=>b.n-a.n);
+  const rad=n=>8+Math.sqrt(n)*3.6;
+  const bubbles=pts.map(p=>({p,x:mx(p.lon),y:my(p.lat),r:rad(p.n)}));
+  // nudge overlapping bubbles apart so every count stays readable
+  for(let it=0;it<40;it++){
+    for(let i=0;i<bubbles.length;i++) for(let j=i+1;j<bubbles.length;j++){
+      const a=bubbles[i], c=bubbles[j];
+      let dx=c.x-a.x, dy=c.y-a.y, d=Math.hypot(dx,dy)||0.01, need=a.r+c.r-3;
+      if(d<need){ const k=(need-d)/d; c.x+=dx*k; c.y+=dy*k; }
+    }
+  }
+  bubbles.forEach(b=>{
+    const g=se("g",{});
+    g.appendChild(se("title",{},`${b.p.name}: ${b.p.n} of us`));
+    g.appendChild(se("circle",{cx:b.x,cy:b.y,r:b.r,fill:"#F5B800","fill-opacity":.92,stroke:"#1E2733","stroke-width":1.8}));
+    svg.appendChild(g);
+  });
+  bubbles.forEach(b=>{
+    svg.appendChild(se("text",{x:b.x,y:b.y+4,"text-anchor":"middle","font-size":b.r>=13?13:11.5,"font-weight":700,fill:"#1E2733","paint-order":"stroke",stroke:"#F5B800","stroke-width":2.5,"pointer-events":"none"},String(b.p.n)));
+  });
+
+  // labels with simple collision avoidance
+  const placed=[]; const hit=(a,b)=>!(a.x2<b.x1||a.x1>b.x2||a.y2<b.y1||a.y1>b.y2);
+  bubbles.forEach(b=>placed.push({x1:b.x-b.r,x2:b.x+b.r,y1:b.y-b.r,y2:b.y+b.r}));
+  placed.push({x1:kx-26,x2:kx+26,y1:ky-26,y2:ky+26});
+  const label=(txt,x,y,anchor,extra)=>{ svg.appendChild(se("text",Object.assign({x,y,"text-anchor":anchor,"font-size":12.5,"font-weight":600,fill:"#1E2733","paint-order":"stroke",stroke:"#FFFFFF","stroke-width":3,"stroke-linejoin":"round"},extra||{}),txt)); };
+  bubbles.slice(0,14).forEach(b=>{
+    const w=b.p.name.length*6.6+4, h=14;
+    const cands=[
+      {x:b.x+b.r+5,y:b.y+4,a:"start",box:{x1:b.x+b.r+3,x2:b.x+b.r+5+w,y1:b.y-h/2-2,y2:b.y+h/2+2}},
+      {x:b.x-b.r-5,y:b.y+4,a:"end",box:{x1:b.x-b.r-5-w,x2:b.x-b.r-3,y1:b.y-h/2-2,y2:b.y+h/2+2}},
+      {x:b.x,y:b.y-b.r-6,a:"middle",box:{x1:b.x-w/2,x2:b.x+w/2,y1:b.y-b.r-6-h,y2:b.y-b.r-4}},
+      {x:b.x,y:b.y+b.r+15,a:"middle",box:{x1:b.x-w/2,x2:b.x+w/2,y1:b.y+b.r+3,y2:b.y+b.r+17}}
+    ];
+    for(const c of cands){
+      if(c.box.x1<4||c.box.x2>MAP_W-4||c.box.y1<2||c.box.y2>MAP_H-2) continue;
+      if(c.box.x2>548 && b.x<548) continue;               // keep clear of the side panel
+      if(placed.some(q=>hit(q,c.box))) continue;
+      label(b.p.name,c.x,c.y,c.a); placed.push(c.box); break;
+    }
+  });
+  // Kolkata caption
+  label("Kolkata, our venue",kx+31,ky+4,"start",{"font-size":12,fill:"#1F5FA8"});
+
+  // side panel: outside India
+  const px0=566;
+  svg.appendChild(se("line",{x1:px0-14,x2:px0-14,y1:20,y2:MAP_H-20,stroke:"#C9D3E0","stroke-width":1}));
+  svg.appendChild(se("text",{x:px0,y:40,"font-size":15,"font-weight":700,fill:"#1E2733"},"Outside India"));
+  const ab=[...abroad.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+  if(!ab.length && recs.length){
+    svg.appendChild(se("text",{x:px0,y:66,"font-size":13,fill:"#586474"},"Everyone is based in India."));
+  }
+  let y=72;
+  ab.slice(0,9).forEach(([name,n])=>{
+    const g=se("g",{});
+    g.appendChild(se("circle",{cx:px0+11,cy:y-4,r:11,fill:"#F5B800",stroke:"#1E2733","stroke-width":1.6}));
+    g.appendChild(se("text",{x:px0+11,y:y,"text-anchor":"middle","font-size":11,"font-weight":700,fill:"#1E2733"},String(n)));
+    g.appendChild(se("text",{x:px0+30,y:y,"font-size":13.5,fill:"#1E2733"},name));
+    svg.appendChild(g); y+=30;
+  });
+  if(ab.length>9){
+    const rest=ab.slice(9).reduce((s,e)=>s+e[1],0);
+    svg.appendChild(se("text",{x:px0+30,y:y,"font-size":13,fill:"#586474"},`${ab.length-9} more cities (${rest})`)); y+=30;
+  }
+  if(unmapped){
+    svg.appendChild(se("text",{x:px0,y:MAP_H-24,"font-size":12.5,fill:"#586474"},`${unmapped} not shown: city not recognised`));
+  }
+  host.appendChild(svg);
+}
+
+/* ---------- Render ---------- */
+function render(recs){
+  const n=recs.length;
+  const cities=new Set(recs.map(r=>r.city&&r.city.name).filter(Boolean));
+  const doms=new Set(); recs.forEach(r=>{ if(r.domain) doms.add(r.domain); r.also.forEach(d=>doms.add(d)); });
+  document.getElementById("lede").textContent = n
+    ? `${n} of us, in ${cities.size} ${cities.size===1?"city":"cities"}, across ${doms.size} ${doms.size===1?"domain":"domains"}.`
+    : "No responses yet. This page fills in live as members complete the poll.";
+  document.getElementById("emptyMsg").hidden = n>0;
+
+  if(!n){ document.getElementById("grid").style.display="none"; renderMap(recs); return; }
+  document.getElementById("grid").style.display="";
+
+  // cities
+  const cityCounts=countBy(recs.map(r=>r.city&&r.city.name));
+  bars(document.getElementById("chCity"), topN(cityCounts,10));
+  document.getElementById("subCity").textContent = cityCounts.length ? `${cityCounts[0][0]} leads with ${cityCounts[0][1]} of us.` : "";
+
+  // hometowns
+  const homeCounts=countBy(recs.map(r=>r.home&&r.home.name));
+  bars(document.getElementById("chHome"), topN(homeCounts,10));
+  const both=recs.filter(r=>r.city&&r.home);
+  const away=both.filter(r=>r.city.name!==r.home.name).length;
+  document.getElementById("subHome").textContent = `${pct(away,both.length)}% live in a different city from their hometown.`;
+
+  // domains
+  const prim=new Map(), also=new Map();
+  recs.forEach(r=>{ if(r.domain) prim.set(r.domain,(prim.get(r.domain)||0)+1); r.also.forEach(d=>also.set(d,(also.get(d)||0)+1)); });
+  const all=new Set([...prim.keys(),...also.keys()]);
+  const dEntries=[...all].map(d=>[d,prim.get(d)||0,also.get(d)||0]).sort((x,y)=>(y[1]+y[2])-(x[1]+x[2])||x[0].localeCompare(y[0])).slice(0,12);
+  bars(document.getElementById("chDomain"), dEntries);
+  const multi=recs.filter(r=>r.also.length>0).length;
+  document.getElementById("subDomain").textContent = `${pct(multi,n)}% of us have worked in more than one domain.`;
+
+  // profession, function, education
+  const pc=countBy(recs.map(r=>r.prof)); bars(document.getElementById("chProf"), topN(pc,8));
+  document.getElementById("subProf").textContent = pc.length ? `${pc[0][0]} is the most common profession.` : "";
+  const fc=countBy(recs.map(r=>r.func)); bars(document.getElementById("chFunc"), topN(fc,8));
+  document.getElementById("subFunc").textContent = fc.length ? `${fc[0][0]} is the most common function.` : "";
+  const ec=countBy(recs.map(r=>r.edu)); bars(document.getElementById("chEdu"), topN(ec,8));
+  document.getElementById("subEdu").textContent = ec.length ? `${pct(ec[0][1],n)}% started in ${ec[0][0]}.` : "";
+
+  // experience
+  const em=new Map(countBy(recs.map(r=>r.exp)));
+  const eEntries=EXP_ORDER.map(k=>[k,em.get(k)||0]);
+  bars(document.getElementById("chExp"), eEntries);
+  const top=[...eEntries].sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById("subExp").textContent = top && top[1] ? `Most of us are in the ${top[0]} band.` : "";
+
+  // travel
+  const tm=new Map(countBy(recs.map(r=>r.travel)));
+  bars(document.getElementById("chTravel"), TRAVEL_ORDER.map(k=>[k,tm.get(k)||0]));
+  const coming=(tm.get("Flying in")||0)+(tm.get("Train / road")||0);
+  document.getElementById("subTravel").textContent = `${coming} travelling in, ${tm.get("I am based in Kolkata")||0} already in Kolkata.`;
+  const from=countBy(recs.filter(r=>r.travel==="Flying in"||r.travel==="Train / road").map(r=>r.city&&r.city.name));
+  const ul=document.getElementById("chipsFrom"); ul.innerHTML="";
+  if(!from.length){ ul.innerHTML='<li class="empty" style="border:none;background:none;padding:0">No travel details yet.</li>'; }
+  from.slice(0,14).forEach(([c,k])=>{ const li=document.createElement("li"); li.textContent=c; const b=document.createElement("b"); b.textContent=k; li.appendChild(b); ul.appendChild(li); });
+
+  renderMap(recs);
+}
+
+/* ---------- Countdown ---------- */
+function tick(){
+  const now=new Date(), d=document.getElementById("days"), t=document.getElementById("plateTitle");
+  if(now<MEET_START){
+    d.textContent=Math.ceil((MEET_START-now)/86400000); t.textContent="days until we meet in Kolkata";
+  } else if(now<MEET_END){
+    d.textContent="Now"; t.textContent="We are in Kolkata this week";
+  } else {
+    d.textContent="Next"; t.textContent="Closing in-person week: dates to be announced";
+  }
+}
+
+/* ---------- Load ---------- */
+function showBanner(msg){
+  const b=document.getElementById("demoBanner"); document.getElementById("demoMsg").textContent=msg; b.hidden=false;
+}
+let lastRecs=[];
+async function load(){
+  let recs=lastRecs;
+  if(CSV_URL){
+    try{
+      const res=await fetch(CSV_URL+(CSV_URL.includes("?")?"&":"?")+"t="+Date.now());
+      if(!res.ok) throw new Error(res.status);
+      recs=toRecords(parseCSV(await res.text()));
+      document.getElementById("demoBanner").hidden=true;
+    }catch(e){
+      showBanner("Could not load the latest responses. Trying again shortly.");
+    }
+  } else { recs=[]; }
+  lastRecs=recs;
+  render(recs);
+  document.getElementById("foot").textContent="Updated "+new Date().toLocaleString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})+".";
+}
+
+/* ================= DIRECTORY (all respondents, with the contact details they shared) ================= */
+/* Directory CSV column order: name, email, phone, LinkedIn, organisation, designation, profession, city, domain */
+let DIR = [], DIR_DEMO = false;
+
+function safeLinkedIn(u){
+  u=(u||"").trim(); if(!u) return null;
+  if(!/^https?:\/\//i.test(u)) u="https://"+u.replace(/^\/+/,"");
+  try{ const x=new URL(u); if(/(^|\.)linkedin\.com$/i.test(x.hostname)) return x.href; }catch(e){}
+  return null;
+}
+function safeEmail(e){ e=(e||"").trim(); return /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(e) ? e : null; }
+function safeTel(p){ const d=(p||"").replace(/[^\d+]/g,""); return d.replace(/\D/g,"").length>=7 ? "tel:"+d : null; }
+function toDir(rows){
+  return rows.slice(1).filter(r=>r.some(x=>(x||"").trim())).map(r=>({
+    name:(r[0]||"").trim(), email:(r[1]||"").trim(), phone:(r[2]||"").trim(), link:safeLinkedIn(r[3]),
+    org:(r[4]||"").trim(), role:(r[5]||"").trim(), prof:(r[6]||"").trim(),
+    city:(canonCity(r[7])||{}).name||"", domain:(r[8]||"").trim()
+  })).filter(p=>p.name).sort((a,b)=>a.name.localeCompare(b.name));
+}
+function cell(cls,text){ const d=document.createElement("div"); d.className=cls; d.textContent=text||""; return d; }
+function renderDirectory(){
+  const q=document.getElementById("dirQ").value.trim().toLowerCase();
+  const city=document.getElementById("dirCity").value;
+  const list=document.getElementById("dirList");
+  const hit=DIR.filter(p=>(!city||p.city===city)&&(!q||[p.name,p.org,p.role,p.prof,p.city,p.domain].join(" ").toLowerCase().includes(q)));
+  list.innerHTML="";
+  const head=document.createElement("div"); head.className="person head"; head.setAttribute("aria-hidden","true");
+  ["Name and designation","Organisation","City","Profession and domain","Contact"].forEach(t=>head.appendChild(cell("",t)));
+  list.appendChild(head);
+  hit.forEach(p=>{
+    const row=document.createElement("div"); row.className="person";
+    const n=document.createElement("div"); n.className="pname";
+    const s=document.createElement("strong"); s.textContent=p.name; n.appendChild(s);
+    const r=document.createElement("span"); r.className="prole"; r.textContent=p.role; n.appendChild(r);
+    row.appendChild(n);
+    row.appendChild(cell("porg",p.org));
+    row.appendChild(cell("pcity",p.city));
+    row.appendChild(cell("pdom",[p.prof,p.domain].filter(Boolean).join(", ")));
+    const c=document.createElement("div"); c.className="pcontact";
+    const addLink=(href,text,label)=>{ const a=document.createElement("a"); a.href=href; a.textContent=text; a.setAttribute("aria-label",label); if(href.startsWith("http")){ a.target="_blank"; a.rel="noopener noreferrer"; } c.appendChild(a); };
+    const em=safeEmail(p.email), tel=safeTel(p.phone);
+    if(em) addLink("mailto:"+em, em, "Email "+p.name);
+    if(tel) addLink(tel, p.phone, "Call "+p.name);
+    if(p.link) addLink(p.link, "LinkedIn profile", "LinkedIn profile of "+p.name);
+    row.appendChild(c);
+    list.appendChild(row);
+  });
+  if(!hit.length){ const e=document.createElement("p"); e.className="empty"; e.textContent=DIR.length?"No one matches that search.":"No members yet."; list.appendChild(e); }
+  document.getElementById("dirCount").textContent =
+    (DIR_DEMO?"Sample entries. ":"") + `${DIR.length} ${DIR.length===1?"member":"members"} listed, with the details they shared in the poll.`;
+}
+function fillCityFilter(){
+  const sel=document.getElementById("dirCity"), cur=sel.value;
+  const cities=[...new Set(DIR.map(p=>p.city).filter(Boolean))].sort();
+  sel.innerHTML='<option value="">All cities</option>';
+  cities.forEach(c=>{ const o=document.createElement("option"); o.value=c; o.textContent=c; sel.appendChild(o); });
+  sel.value=cities.includes(cur)?cur:"";
+}
+async function loadDirectory(){
+  if(DIR_CSV_URL){
+    try{
+      const res=await fetch(DIR_CSV_URL+(DIR_CSV_URL.includes("?")?"&":"?")+"t="+Date.now());
+      if(!res.ok) throw new Error(res.status);
+      DIR=toDir(parseCSV(await res.text()));
+    }catch(e){ /* keep what we already have */ }
+  } else { DIR=[]; }
+  DIR_DEMO=false;
+  fillCityFilter(); renderDirectory();
+}
+
+/* ---------- Tabs ---------- */
+function showTab(which){
+  const dir = which==="directory";
+  document.getElementById("panelSnap").hidden=dir;
+  document.getElementById("panelDir").hidden=!dir;
+  document.getElementById("tabSnap").setAttribute("aria-selected",String(!dir));
+  document.getElementById("tabDir").setAttribute("aria-selected",String(dir));
+  try{ history.replaceState(null,"",dir?"#whos-who":"#at-a-glance"); }catch(e){}
+}
+document.getElementById("tabSnap").addEventListener("click",()=>showTab("snapshot"));
+document.getElementById("tabDir").addEventListener("click",()=>showTab("directory"));
+document.getElementById("dirQ").addEventListener("input",renderDirectory);
+document.getElementById("dirCity").addEventListener("change",renderDirectory);
+if(location.hash==="#whos-who"||location.hash==="#directory") showTab("directory");
+
+tick(); load(); loadDirectory();
+setInterval(tick,3600000); setInterval(load,REFRESH_MS); setInterval(loadDirectory,REFRESH_MS);
+</script>
+</body>
+</html>
