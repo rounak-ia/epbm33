@@ -56,6 +56,7 @@ function logoFallback(img){
   .batch strong{font-family:'Source Serif 4',Georgia,serif;font-size:30px;line-height:1;color:var(--tram);font-weight:700}
   .batch span{color:var(--muted);font-size:15px}
   .lede{font-size:18px;max-width:30em;margin:0 0 26px;min-height:1.6em}
+  .stats{display:flex;flex-wrap:wrap;gap:22px 44px}
   .countdown{display:inline-flex;align-items:center;gap:18px;border-left:4px solid var(--taxi);padding:6px 0 6px 18px}
   .countdown .big{font-size:54px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}
   .cdtext{display:flex;flex-direction:column;font-size:14.5px;color:var(--muted);line-height:1.4}
@@ -144,9 +145,15 @@ function logoFallback(img){
     <h1>IIM Calcutta, Executive Programme in Business Management</h1>
     <p class="batch"><strong>Batch 33</strong><span>In collaboration with TimesPro</span></p>
     <p class="lede" id="lede">Loading our cohort...</p>
-    <div class="countdown" id="plate" aria-live="polite">
-      <span class="big" id="days">--</span>
-      <span class="cdtext"><strong id="plateTitle">days until we meet in Kolkata</strong><span>First in-person week, 28 Nov to 2 Dec 2026</span></span>
+    <div class="stats">
+      <div class="countdown" id="totalBox">
+        <span class="big" id="total">0</span>
+        <span class="cdtext"><strong>Total candidates</strong><span>Unique responses so far</span></span>
+      </div>
+      <div class="countdown" id="plate" aria-live="polite">
+        <span class="big" id="days">--</span>
+        <span class="cdtext"><strong id="plateTitle">days until we meet in Kolkata</strong><span>First in-person week, 28 Nov to 2 Dec 2026</span></span>
+      </div>
     </div>
   </div>
   <div class="mapcol">
@@ -540,21 +547,42 @@ function tick(){
 function showBanner(msg){
   const b=document.getElementById("demoBanner"); document.getElementById("demoMsg").textContent=msg; b.hidden=false;
 }
-let lastRecs=[];
+let lastPub=null, lastDirRows=null;
+function nonBlank(rows){ return rows.slice(1).filter(r=>r.some(x=>(x||"").trim())); }
+/* one person = one email (or, if the email is missing, the same name and phone); the latest submission wins */
+function personKey(r){
+  const em=(r[1]||"").trim().toLowerCase();
+  if(em.indexOf("@")>0) return "e:"+em;
+  return "n:"+(r[0]||"").trim().toLowerCase()+"|"+(r[2]||"").replace(/\D/g,"");
+}
+async function fetchRows(url){
+  const res=await fetch(url+(url.indexOf("?")>-1?"&":"?")+"t="+Date.now());
+  if(!res.ok) throw new Error(res.status);
+  return parseCSV(await res.text());
+}
 async function load(){
-  let recs=lastRecs;
-  if(CSV_URL){
-    try{
-      const res=await fetch(CSV_URL+(CSV_URL.includes("?")?"&":"?")+"t="+Date.now());
-      if(!res.ok) throw new Error(res.status);
-      recs=toRecords(parseCSV(await res.text()));
-      document.getElementById("demoBanner").hidden=true;
-    }catch(e){
-      showBanner("Could not load the latest responses. Trying again shortly.");
-    }
-  } else { recs=[]; }
-  lastRecs=recs;
+  let failed=false;
+  const [pub,dir]=await Promise.all([
+    CSV_URL ? fetchRows(CSV_URL).catch(()=>{failed=true;return lastPub;}) : Promise.resolve(null),
+    DIR_CSV_URL ? fetchRows(DIR_CSV_URL).catch(()=>{failed=true;return lastDirRows;}) : Promise.resolve(null)
+  ]);
+  lastPub=pub; lastDirRows=dir;
+  if(failed) showBanner("Could not load the latest responses. Trying again shortly.");
+  else document.getElementById("demoBanner").hidden=true;
+
+  const dirData=dir?nonBlank(dir):[];
+  let recs=pub?toRecords(pub):[];
+  let keep=null, total=recs.length;
+  if(dirData.length){
+    const last=new Map(); dirData.forEach((r,i)=>last.set(personKey(r),i));
+    keep=new Set(last.values()); total=keep.size;
+    if(recs.length===dirData.length) recs=recs.filter((_,i)=>keep.has(i));   // drop repeat submissions from the charts too
+  }
+  DIR=toDir([[]].concat(keep?dirData.filter((_,i)=>keep.has(i)):dirData));
+  DIR_DEMO=false;
+  document.getElementById("total").textContent=total;
   render(recs);
+  fillCityFilter(); renderDirectory();
   document.getElementById("foot").textContent="Updated "+new Date().toLocaleString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})+".";
 }
 
@@ -616,18 +644,6 @@ function fillCityFilter(){
   cities.forEach(c=>{ const o=document.createElement("option"); o.value=c; o.textContent=c; sel.appendChild(o); });
   sel.value=cities.includes(cur)?cur:"";
 }
-async function loadDirectory(){
-  if(DIR_CSV_URL){
-    try{
-      const res=await fetch(DIR_CSV_URL+(DIR_CSV_URL.includes("?")?"&":"?")+"t="+Date.now());
-      if(!res.ok) throw new Error(res.status);
-      DIR=toDir(parseCSV(await res.text()));
-    }catch(e){ /* keep what we already have */ }
-  } else { DIR=[]; }
-  DIR_DEMO=false;
-  fillCityFilter(); renderDirectory();
-}
-
 /* ---------- Tabs ---------- */
 function showTab(which){
   const dir = which==="directory";
@@ -643,8 +659,8 @@ document.getElementById("dirQ").addEventListener("input",renderDirectory);
 document.getElementById("dirCity").addEventListener("change",renderDirectory);
 if(location.hash==="#whos-who"||location.hash==="#directory") showTab("directory");
 
-tick(); load(); loadDirectory();
-setInterval(tick,3600000); setInterval(load,REFRESH_MS); setInterval(loadDirectory,REFRESH_MS);
+tick(); load();
+setInterval(tick,3600000); setInterval(load,REFRESH_MS);
 </script>
 </body>
 </html>
