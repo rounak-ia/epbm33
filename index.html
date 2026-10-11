@@ -341,7 +341,7 @@ function logoFallback(img){
   <div class="wrap foot-grid">
     <div class="fcard about">
       <p class="foot-title">About this page</p>
-      <p>Built by <strong>Rounak Roy</strong> - Data Scientist from Bangalore.</p>
+      <p>Built with ❤️ by <strong>Rounak Roy</strong> | Data Scientist</p>
       <p class="fine">An unofficial batch page, not run by IIM Calcutta or TimesPro.</p>
     </div>
     <div class="foot-right">
@@ -383,12 +383,18 @@ function countBy(list){
   list.forEach(v=>{ if(!v) return; const k=v.toLowerCase(), e=m.get(k); if(e) e.n++; else m.set(k,{label:v,n:1}); });
   return [...m.values()].sort((a,b)=>b.n-a.n||a.label.localeCompare(b.label)).map(e=>[e.label,e.n]);
 }
+const isOtherLabel = l => /^others?$/i.test(String(l).trim()) || String(l).indexOf("Others (")===0;
 function topN(entries,n){
-  if(entries.length<=n) return entries;
-  const rest=entries.slice(n).reduce((s,e)=>s+e[1],0);
-  return entries.slice(0,n).concat([["Others ("+(entries.length-n)+" more)",rest]]);
+  /* "Other" (an answer people chose) and the small categories that do not fit in the top list are shown as ONE row, summed, at the end */
+  const named=entries.filter(e=>!isOtherLabel(e[0]));
+  const chosen=entries.filter(e=>isOtherLabel(e[0])).reduce((s,e)=>s+e[1],0);
+  const head=named.slice(0,n), tail=named.slice(n);
+  const total=chosen+tail.reduce((s,e)=>s+e[1],0);
+  if(!total) return head;
+  return head.concat([[chosen ? "Other" : "Others ("+tail.length+" more)", total]]);
 }
 function leaders(entries){            /* entries sorted high to low: returns the names tied for first */
+  entries=entries.filter(e=>!isOtherLabel(e[0]));
   if(!entries.length || !entries[0][1]) return null;
   const m=entries[0][1]; return {m, names:entries.filter(e=>e[1]===m).map(e=>e[0])};
 }
@@ -552,7 +558,7 @@ function personKey(r){
 function bars(el, entries, opts){
   el.innerHTML="";
   if(!entries.length){ const p=document.createElement("p"); p.className="empty"; p.textContent="No answers yet."; el.appendChild(p); return; }
-  const isOther=e=>String(e[0]).indexOf("Others (")===0;
+  const isOther=e=>isOtherLabel(e[0]);
   const max=Math.max(1,...entries.filter(e=>!isOther(e)).map(e=>e[1]+(e[2]||0)));
   entries.forEach(([label,a,b])=>{
     const row=document.createElement("div"); row.className="row";
