@@ -24,7 +24,7 @@ function logoFallback(img){
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#1E2733;      /* Howrah Bridge steel */
@@ -63,8 +63,9 @@ function logoFallback(img){
 
   /* hero */
   .hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;padding:36px 20px;align-items:stretch}
-  h1{font-size:clamp(30px,4vw,46px);line-height:1.12;margin:0 0 16px;font-weight:700;max-width:16em}
-  .batch{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 24px}
+  h1{font-size:clamp(30px,4vw,46px);line-height:1.12;margin:0 0 14px;font-weight:700;max-width:16em}
+  .hero-left{display:flex;flex-direction:column;justify-content:space-between;gap:28px;min-width:0}
+  .batch{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0}
   .batch strong{font-family:var(--serif);font-size:30px;line-height:1;color:var(--tram);font-weight:700}
   .batch span{color:var(--muted);font-size:15px}
   .stats{display:flex;flex-wrap:wrap;gap:22px 44px}
@@ -74,10 +75,10 @@ function logoFallback(img){
   .stat-text strong{color:var(--ink);font-size:16px;font-weight:600}
 
   /* map */
-  .mapcol{display:flex;flex-direction:column;min-width:0}
-  .mapbox{flex:1;min-height:440px;display:flex;border:1px solid var(--line);border-radius:6px;background:#EDF2F8;overflow:hidden}
-  .mapsvg{flex:1;min-width:0;display:flex}
-  .mapsvg svg{display:block;width:100%;height:100%}
+  .mapcol{position:relative;min-width:0;min-height:400px}
+  .mapbox{position:absolute;inset:0;display:flex;border:1px solid var(--line);border-radius:6px;background:#EDF2F8;overflow:hidden}
+  .mapsvg{position:relative;flex:1;min-width:0}
+  .mapsvg svg{position:absolute;inset:0;display:block;width:100%;height:100%}
   .mapsvg text{font-family:var(--sans)}
   .abroad{flex:none;width:210px;padding:18px 16px;border-left:1px solid #C9D3E0;background:rgba(255,255,255,.55);overflow:auto}
   .abroad h3{margin:0 0 10px;font:700 15px/1.3 var(--sans)}
@@ -85,9 +86,11 @@ function logoFallback(img){
   .abroad li{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:14px}
   .abroad .n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--taxi);border:1.6px solid var(--ink);font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
   .abroad p{margin:0 0 8px;color:var(--muted);font-size:13.5px}
-  .maplegend{font-size:13.5px;color:var(--muted);margin:8px 0 0}
-  .dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--taxi);border:2px solid var(--ink);vertical-align:-1px;margin-right:4px}
-  .ring{display:inline-block;width:11px;height:11px;border-radius:50%;border:2px dashed var(--tram);vertical-align:-1px;margin:0 4px 0 12px}
+  .maplegend{position:absolute;top:12px;right:12px;z-index:2;margin:0;padding:6px 10px;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:4px;font-size:12.5px;line-height:1.55;color:var(--muted)}
+  .maplegend span{display:block}
+  .dot,.ring{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:-1px;margin-right:7px}
+  .dot{background:var(--taxi);border:2px solid var(--ink)}
+  .ring{border:2px dashed var(--tram)}
 
   /* tabs */
   .tabs{display:flex;gap:8px;border-bottom:2px solid var(--ink);margin-bottom:24px;padding-top:6px}
@@ -117,7 +120,7 @@ function logoFallback(img){
   .fill.others{background:#9AA5B4}
   .cnt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
   .cnt b{font-weight:700}
-  .parts{display:inline-flex;gap:9px;margin-left:10px;font-weight:500;font-size:13px;color:var(--muted)}
+  .parts{display:inline-flex;gap:9px;margin-left:10px;font-weight:400;font-size:13px;color:var(--muted)}
   .parts i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px}
   .parts i.d1{background:var(--tram)}
   .parts i.d2{background:var(--taxi)}
@@ -136,15 +139,16 @@ function logoFallback(img){
   .pname strong{display:block;font-weight:600;overflow-wrap:anywhere}
   .prole{color:var(--muted);font-size:13.5px;overflow-wrap:anywhere}
   .porg{overflow-wrap:anywhere}
-  .pcontact a{display:block;font-weight:500;overflow-wrap:anywhere}
+  .pcontact a{display:block;overflow-wrap:anywhere}
 
   footer{border-top:1px solid var(--line);padding:28px 0 36px;color:var(--muted);font-size:14.5px;line-height:1.6}
   footer strong{color:var(--ink);font-weight:600}
   footer p{margin:0 0 6px}
-  .foot-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px 56px}
+  .foot-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px 40px}   /* same columns as the hero, so the footer lines up with it */
   .foot-title{color:var(--ink);font-weight:600;font-size:15px;margin-bottom:6px !important}
-  .privacy{border-left:4px solid var(--taxi);padding-left:16px}
-  .foot-base{display:flex;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;margin-top:22px;padding-top:16px;position:relative;font-size:13.5px}
+  .privacy{align-self:start;border-left:4px solid var(--taxi);padding-left:16px}
+  .about a{white-space:nowrap}
+  .foot-base{display:block;margin-top:22px;padding-top:16px;position:relative;font-size:13.5px}
   .foot-base::before{content:"";position:absolute;top:0;left:20px;right:20px;height:1px;background:var(--line)}
   noscript p{margin:0;padding:14px 20px;background:#FFF4D1;color:var(--ink);text-align:center}
 
@@ -153,7 +157,11 @@ function logoFallback(img){
     .topbar-in{min-height:96px;gap:18px}
     .logo.iimc img{height:70px}
     .logo img{height:50px}
-    .mapbox{flex-direction:column;min-height:0}
+    .mapcol{position:static;min-height:0}
+    .mapbox{position:static;flex-direction:column}
+    .mapsvg{flex:none;width:100%;aspect-ratio:540/560}
+    .maplegend{top:8px;right:8px;padding:5px 8px;font-size:11.5px}
+    .hero-left{gap:20px}
     .abroad{width:auto;border-left:0;border-top:1px solid #C9D3E0}
     .abroad ul{display:flex;flex-wrap:wrap;gap:4px 20px}
     .grid{grid-template-columns:1fr;gap:34px}
@@ -191,16 +199,18 @@ function logoFallback(img){
 
 <div class="topbar">
   <div class="wrap topbar-in">
-    <span class="logo iimc"><img src="iimc-logo.png" width="419" height="424" data-fallback="https://www.iimcal.ac.in/sites/default/files/logo.png" alt="IIM Calcutta" onerror="logoFallback(this)"></span>
+    <span class="logo iimc"><img src="iimc-logo.png" width="170" height="172" data-fallback="https://www.iimcal.ac.in/sites/default/files/logo.png" alt="IIM Calcutta" onerror="logoFallback(this)"></span>
     <span class="vr" aria-hidden="true"></span>
-    <span class="logo tp"><img src="timespro-logo.png" width="701" height="221" alt="TimesPro" onerror="logoFallback(this)"></span>
+    <span class="logo tp"><img src="timespro-logo.png" width="393" height="124" alt="TimesPro" onerror="logoFallback(this)"></span>
   </div>
 </div>
 
 <header class="wrap hero">
-  <div>
-    <h1>IIM Calcutta, Executive Programme in Business Management</h1>
-    <p class="batch"><strong>Batch 33</strong><span>In collaboration with TimesPro</span></p>
+  <div class="hero-left">
+    <div class="hero-top">
+      <h1>IIM Calcutta, Executive Programme in Business Management</h1>
+      <p class="batch"><strong>Batch 33</strong><span>In collaboration with TimesPro</span></p>
+    </div>
     <div class="stats">
       <div class="stat">
         <span class="big" id="total">0</span>
@@ -218,10 +228,11 @@ function logoFallback(img){
   </div>
   <div class="mapcol">
     <div class="mapbox">
-      <div class="mapsvg" id="mapSvg"></div>
+      <div class="mapsvg" id="mapSvg">
+        <p class="maplegend"><span><i class="dot"></i>City (bigger circle, more members)</span><span><i class="ring"></i>Kolkata, where we meet</span></p>
+      </div>
       <aside class="abroad" id="abroad" aria-label="Members based outside India"></aside>
     </div>
-    <p class="maplegend"><span class="dot"></span>Where we are based (bigger means more of us)<span class="ring"></span>Kolkata, where we meet</p>
   </div>
 </header>
 
@@ -307,16 +318,15 @@ function logoFallback(img){
   <div class="wrap foot-grid">
     <div class="about">
       <p class="foot-title">About this page</p>
-      <p>Built by <strong>Rounak Roy</strong>, a Data Scientist from Bangalore who builds tools like this for fun.</p>
-      <p>Suggestions for improvement are always welcome: <a href="tel:+917278432052">+91 72784 32052</a> (<a href="https://wa.me/917278432052" target="_blank" rel="noopener noreferrer">WhatsApp</a>).</p>
+      <p>Built by <strong>Rounak Roy</strong> - Data Scientist from Bangalore. An unofficial batch page, not run by IIM Calcutta or TimesPro.</p>
+      <p>Suggestions for improvement are always welcome. <a href="https://wa.me/917278432052" target="_blank" rel="noopener noreferrer">Message me on WhatsApp</a>.</p>
     </div>
     <div class="privacy" role="note">
       <p class="foot-title">Please keep this link within Batch 33</p>
-      <p>This page lists members' contact details. Security is a shared responsibility: I look after how the page is built, and every member helps by not sharing the link with anyone outside this group.</p>
+      <p>This page lists members' contact details. Security is a shared responsibility.</p>
     </div>
   </div>
   <div class="wrap foot-base">
-    <span>An unofficial batch page, not run by IIM Calcutta or TimesPro.</span>
     <span id="foot"></span>
   </div>
 </footer>
@@ -571,8 +581,8 @@ function renderMap(recs){
     const e=inIndia.get(g)||{name:g,lat:pos[0],lon:pos[1],n:0}; e.n++; inIndia.set(g,e);
   });
   renderAbroad(abroad, unmapped, recs.length>0);       /* decides whether the side panel is shown */
-  const host=$("mapSvg"); host.innerHTML="";
-  const sc=(host.clientWidth||430)/MAP_W;
+  const host=$("mapSvg"), oldSvg=host.querySelector("svg"); if(oldSvg) oldSvg.remove();
+  const sc=Math.min((host.clientWidth||430)/MAP_W,(host.clientHeight||440)/MAP_H);
   const fs=Math.max(12,11.5/sc), rf=Math.max(1,0.85/sc);          /* keep labels readable on small screens */
   const svg=se("svg",{viewBox:`0 0 ${MAP_W} ${MAP_H}`,preserveAspectRatio:"xMidYMid meet",role:"img"});
   for(let lat=10;lat<=35;lat+=5) svg.appendChild(se("line",{x1:0,x2:MAP_W,y1:my(lat),y2:my(lat),stroke:"#DCE4EE","stroke-width":1}));
@@ -613,7 +623,7 @@ function renderMap(recs){
   const label=(txt,x,y,anchor,extra)=>svg.appendChild(se("text",Object.assign({x,y,"text-anchor":anchor,"font-size":fs,"font-weight":600,fill:"#1E2733","paint-order":"stroke",stroke:"#FFFFFF","stroke-width":3,"stroke-linejoin":"round"},extra||{}),txt));
   const h=fs+4, cw=fs*0.56;
   const kBubble=bubbles.some(b=>b.p.name==="Kolkata");
-  if(kBubble) placed.pop();                                        /* the ring is part of the Kolkata bubble's own label spacing */
+  const ringBox=placed.pop();                                      /* the ring: other cities' labels avoid it, Kolkata's own label may sit beside it */
   bubbles.slice(0,14).forEach(b=>{
     const isK=b.p.name==="Kolkata";
     const text=isK ? "Kolkata, our venue" : b.p.name;
@@ -626,7 +636,7 @@ function renderMap(recs){
     ];
     for(const c of cands){
       if(c.box.x1<2||c.box.x2>MAP_W-2||c.box.y1<2||c.box.y2>MAP_H-2) continue;
-      if(placed.some(q=>hit(q,c.box))) continue;
+      if(placed.some(q=>hit(q,c.box)) || (!isK && hit(ringBox,c.box))) continue;
       label(text,c.x,c.y,c.a,b.p.name==='Kolkata'?{fill:'#1F5FA8'}:null); placed.push(c.box); break;
     }
   });
@@ -816,7 +826,8 @@ async function load(){
   $("nudge").hidden=!DIR.length;
   $("foot").textContent="Updated "+new Date().toLocaleString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})+". Refreshes automatically.";
 }
-let rt; window.addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(()=>renderMap(shown),150); });
+let rt; const redraw=()=>{ clearTimeout(rt); rt=setTimeout(()=>renderMap(shown),120); };
+if(window.ResizeObserver) new ResizeObserver(redraw).observe($("mapSvg")); else window.addEventListener("resize",redraw);
 document.addEventListener("visibilitychange",()=>{ if(!document.hidden && Date.now()-lastLoad>60000) load(); });
 tick(); load();
 setInterval(tick,3600000);
