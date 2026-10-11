@@ -146,9 +146,9 @@ function logoFallback(img){
   footer p{margin:0 0 6px}
   .foot-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:20px 40px}   /* same columns as the hero, so the footer lines up with it */
   .foot-right{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:20px}
-  .fcard{background:#fff;border:1px solid var(--line);border-radius:4px;padding:16px 18px}                /* equal height: the grid stretches all three */
+  .fcard{background:#fff;border:1px solid var(--line);border-left:4px solid var(--taxi);border-radius:4px;padding:16px 18px}                /* equal height: the grid stretches all three */
+  .fcard p{text-wrap:pretty}
   .fcard p:last-child{margin-bottom:0}
-  .fcard.privacy{border-left:4px solid var(--taxi)}
   .foot-title{color:var(--ink);font-weight:600;font-size:15px;line-height:1.35;margin-bottom:8px !important;text-wrap:balance}
   .fine{font-size:13px;color:#667180}
   .nb{white-space:nowrap}
@@ -328,7 +328,7 @@ function logoFallback(img){
     <div class="foot-right">
       <div class="fcard">
         <p class="foot-title">Feedback</p>
-        <p>Suggestions for improvement are <span class="nb">always welcome.&nbsp;<a href="https://wa.me/917278432052" target="_blank" rel="noopener noreferrer">WhatsApp</a></span></p>
+        <p>Suggestions for improvement are always <span class="nb">welcome.&nbsp;<a href="https://wa.me/917278432052" target="_blank" rel="noopener noreferrer">WhatsApp</a></span></p>
       </div>
       <div class="fcard privacy" role="note">
         <p class="foot-title">Please keep this link within Batch&nbsp;33</p>
