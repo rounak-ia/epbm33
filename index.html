@@ -95,7 +95,9 @@ function logoFallback(img){
   /* batch introduction: same width as the content above, so its right edge meets the map's */
   .intro{margin:0 auto 36px}
   .intro .card{background:#fff;border:1px solid var(--line);border-left:4px solid var(--taxi);border-radius:4px;padding:24px 28px}
-  .intro h2{font-size:clamp(22px,2.4vw,26px);line-height:1.25;margin:0 0 12px}
+  .intro .ihead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:2px 20px;margin:0 0 12px}
+  .intro h2{font-size:clamp(22px,2.4vw,26px);line-height:1.25;margin:0}
+  .intro .ihead .credit{margin:0;font-size:13px;line-height:1.4;font-weight:400;color:#667180}
   .intro p{margin:0 0 10px;font-size:16px;line-height:1.6;text-wrap:pretty}
   .intro p:last-child{margin-bottom:0}
   .intro .tag{font-family:var(--serif);font-weight:700;font-size:20px;line-height:1.4;color:var(--tram)}
@@ -159,6 +161,8 @@ function logoFallback(img){
   .fcard p:last-child{margin-bottom:0}
   .foot-title{color:var(--ink);font-weight:600;font-size:15px;line-height:1.35;margin-bottom:8px !important;text-wrap:balance}
   .fine{font-size:13px;color:#667180}
+  .fcard.about p strong{font-weight:400;color:var(--ink)}
+  .fcard.about .sep{color:#A7B0BC}
   .nb{white-space:nowrap}
   .foot-base{display:block;margin-top:22px;padding-top:16px;position:relative;font-size:13.5px}
   .foot-base::before{content:"";position:absolute;top:0;left:20px;right:20px;height:1px;background:var(--line)}
@@ -251,7 +255,10 @@ function logoFallback(img){
 
 <div class="wrap intro">
   <div class="card">
-    <h2>EPBM Batch 33 | IIM <span class="nb">Calcutta 🎓</span></h2>
+    <div class="ihead">
+      <h2>EPBM Batch 33 | IIM <span class="nb">Calcutta 🎓</span></h2>
+      <p class="credit">Written by Anushkaa Nerkar</p>
+    </div>
     <p>Where ambition meets intellect, experience meets fresh perspectives, and networking goes beyond exchanging visiting cards!</p>
     <p>A diverse tribe of thinkers, leaders, and future game-changers — here to learn, challenge, collaborate, and grow together.</p>
     <p class="tag">One batch. Countless perspectives. Limitless possibilities.</p>
@@ -341,7 +348,7 @@ function logoFallback(img){
   <div class="wrap foot-grid">
     <div class="fcard about">
       <p class="foot-title">About this page</p>
-      <p>Built with ❤️ by <strong>Rounak Roy</strong> | Data Scientist</p>
+      <p>Built with ❤️ by <strong>Rounak Roy</strong> <span class="sep">|</span> Data Scientist</p>
       <p class="fine">An unofficial batch page, not run by IIM Calcutta or TimesPro.</p>
     </div>
     <div class="foot-right">
