@@ -488,7 +488,7 @@ const CITY_INDEX = {};
 CITY_LIST.forEach(c => { CITY_INDEX[c[0].toLowerCase()] = c; c[3].forEach(a => CITY_INDEX[a] = c); });
 const INTL = new Set(["Dubai","Abu Dhabi","Singapore","London","New York","San Francisco","Toronto","Sydney","Melbourne","Doha","Riyadh","Muscat","Kuwait City","Hong Kong","Tokyo","Frankfurt","Amsterdam","Paris","Dublin","Kuala Lumpur","Bangkok","Seattle","Dallas","Houston","Chicago","Austin","Boston","Zurich","Munich","Dhaka","Kathmandu","Colombo","Los Angeles","Atlanta","Sharjah","Manama","Jeddah","Berlin","Stockholm","Johannesburg","Auckland","Perth","Vancouver","Seoul","Shanghai","Beijing","Jakarta","Manila","Fergana","Tashkent"]);
 const MAP_GROUP = {"Gurugram":"Delhi NCR","Noida":"Delhi NCR","Ghaziabad":"Delhi NCR","Faridabad":"Delhi NCR","Delhi":"Delhi NCR","Sonipat":"Delhi NCR",
-  "Navi Mumbai":"Mumbai","Thane":"Mumbai","Mohali":"Chandigarh","Panchkula":"Chandigarh","Howrah":"Kolkata","Kalyani":"Kolkata","Barrackpore":"Kolkata","Barasat":"Kolkata","Serampore":"Kolkata"};
+  "Navi Mumbai":"Mumbai","Thane":"Mumbai","Mohali":"Chandigarh","Panchkula":"Chandigarh","Howrah":"Kolkata"};
 const GROUP_POS = {"Delhi NCR":[28.6139,77.2090]};
 
 function lookupCity(s){
@@ -678,6 +678,11 @@ function renderMap(recs){
       const dx=c.x-a.x, dy=c.y-a.y, d=Math.hypot(dx,dy)||0.01, need=a.r+c.r-3;
       if(d<need){ const k=(need-d)/d; c.x+=dx*k; c.y+=dy*k; }
     }
+    bubbles.forEach(b=>{                                            /* anything other than Kolkata itself stays outside the venue ring */
+      if(b.p.name==="Kolkata") return;
+      let dx=b.x-kx, dy=b.y-ky, d=Math.hypot(dx,dy); const need=kr+b.r*0.55+2;
+      if(d<need){ if(d<0.01){ dx=0; dy=-1; d=1; } b.x=kx+dx/d*need; b.y=ky+dy/d*need; }
+    });
   }
   bubbles.forEach(b=>{
     const g=se("g",{});
