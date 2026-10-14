@@ -143,7 +143,8 @@ function logoFallback(img){
   .dirtools{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 10px}
   .dirtools input,.dirtools select{font:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--ink);border-radius:4px;background:#fff;color:var(--ink)}
   .dirtools input{flex:1;min-width:220px}
-  .dirlist{margin-bottom:56px}
+  .dirlist{margin-bottom:20px}
+  .backbottom{margin:0 0 56px}
   .person{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.5fr) minmax(0,2.2fr);gap:16px;padding:12px 0;border-bottom:1px solid var(--line);align-items:start;font-size:14.5px}
   .person.head{font-weight:600;color:var(--muted);font-size:13.5px;border-bottom:2px solid var(--ink);padding-top:4px}
   .pname strong{display:block;font-weight:600;overflow-wrap:anywhere}
@@ -162,7 +163,6 @@ function logoFallback(img){
   .foot-title{color:var(--ink);font-weight:600;font-size:15px;line-height:1.35;margin-bottom:8px !important;text-wrap:balance}
   .fine{font-size:13px;color:#667180}
   .fcard.about p strong{font-weight:400;color:var(--ink)}
-  .fcard.about .sep{color:#A7B0BC}
   .nb{white-space:nowrap}
   .foot-base{display:block;margin-top:22px;padding-top:16px;position:relative;font-size:13.5px}
   .foot-base::before{content:"";position:absolute;top:0;left:20px;right:20px;height:1px;background:var(--line)}
@@ -331,6 +331,7 @@ function logoFallback(img){
   </div>
 
   <div id="panelDir" role="tabpanel" aria-labelledby="tabDir" hidden>
+    <div class="nudge"><span>Want to see the batch at a glance?</span><button type="button" class="linkbtn" id="backBtn">&larr; Back to Cohort Overview</button></div>
     <h2>Batch 33 Member Directory</h2>
     <p class="sub" id="dirCount" style="margin-bottom:2px"></p>
     <p class="sub" style="margin-bottom:0">Details are shared by members for batch networking purposes only. Please do not share this link outside Batch 33.</p>
@@ -341,6 +342,7 @@ function logoFallback(img){
       <select id="dirCity"><option value="">All cities</option></select>
     </div>
     <div class="dirlist" id="dirList" role="table" aria-label="Batch 33 members"></div>
+    <p class="backbottom"><button type="button" class="linkbtn" id="backBtn2">&larr; Back to Cohort Overview</button></p>
   </div>
 </main>
 
@@ -348,7 +350,7 @@ function logoFallback(img){
   <div class="wrap foot-grid">
     <div class="fcard about">
       <p class="foot-title">About this page</p>
-      <p>Built with ❤️ by <strong>Rounak Roy</strong> <span class="sep">|</span> Data Scientist</p>
+      <p>Built with ❤️ by <strong>Rounak Roy</strong></p>
       <p class="fine">An unofficial batch page, not run by IIM Calcutta or TimesPro.</p>
     </div>
     <div class="foot-right">
@@ -487,6 +489,12 @@ const CITY_LIST = [
 const CITY_INDEX = {};
 CITY_LIST.forEach(c => { CITY_INDEX[c[0].toLowerCase()] = c; c[3].forEach(a => CITY_INDEX[a] = c); });
 const INTL = new Set(["Dubai","Abu Dhabi","Singapore","London","New York","San Francisco","Toronto","Sydney","Melbourne","Doha","Riyadh","Muscat","Kuwait City","Hong Kong","Tokyo","Frankfurt","Amsterdam","Paris","Dublin","Kuala Lumpur","Bangkok","Seattle","Dallas","Houston","Chicago","Austin","Boston","Zurich","Munich","Dhaka","Kathmandu","Colombo","Los Angeles","Atlanta","Sharjah","Manama","Jeddah","Berlin","Stockholm","Johannesburg","Auckland","Perth","Vancouver","Seoul","Shanghai","Beijing","Jakarta","Manila","Fergana","Tashkent"]);
+const COUNTRY = {"Dubai":"UAE","Abu Dhabi":"UAE","Sharjah":"UAE","Singapore":"Singapore","London":"UK","New York":"USA","San Francisco":"USA","Toronto":"Canada","Vancouver":"Canada",
+  "Sydney":"Australia","Melbourne":"Australia","Perth":"Australia","Auckland":"New Zealand","Doha":"Qatar","Riyadh":"Saudi Arabia","Jeddah":"Saudi Arabia","Muscat":"Oman","Kuwait City":"Kuwait","Manama":"Bahrain",
+  "Hong Kong":"Hong Kong","Tokyo":"Japan","Seoul":"South Korea","Shanghai":"China","Beijing":"China","Jakarta":"Indonesia","Manila":"Philippines","Kuala Lumpur":"Malaysia","Bangkok":"Thailand",
+  "Frankfurt":"Germany","Munich":"Germany","Berlin":"Germany","Amsterdam":"Netherlands","Paris":"France","Dublin":"Ireland","Zurich":"Switzerland","Stockholm":"Sweden",
+  "Seattle":"USA","Dallas":"USA","Houston":"USA","Chicago":"USA","Austin":"USA","Boston":"USA","Los Angeles":"USA","Atlanta":"USA",
+  "Dhaka":"Bangladesh","Kathmandu":"Nepal","Colombo":"Sri Lanka","Johannesburg":"South Africa","Fergana":"Uzbekistan","Tashkent":"Uzbekistan"};
 const MAP_GROUP = {"Gurugram":"Delhi NCR","Noida":"Delhi NCR","Ghaziabad":"Delhi NCR","Faridabad":"Delhi NCR","Delhi":"Delhi NCR","Sonipat":"Delhi NCR",
   "Navi Mumbai":"Mumbai","Thane":"Mumbai","Mohali":"Chandigarh","Panchkula":"Chandigarh","Howrah":"Kolkata"};
 const GROUP_POS = {"Delhi NCR":[28.6139,77.2090]};
@@ -632,7 +640,7 @@ function renderAbroad(abroad, unmapped, hasData, unmappedNames){
     ab.slice(0,9).forEach(([name,n])=>{
       const li=document.createElement("li");
       const c=document.createElement("span"); c.className="n"; c.textContent=n;
-      const t=document.createElement("span"); t.textContent=name;
+      const t=document.createElement("span"); t.textContent=(COUNTRY[name] && COUNTRY[name]!==name) ? name+" - "+COUNTRY[name] : name;
       li.append(c,t); ul.appendChild(li);
     });
     if(ab.length>9){ const li=document.createElement("li"); li.textContent=`${ab.length-9} more cities (${ab.slice(9).reduce((s,e)=>s+e[1],0)})`; li.style.color="var(--muted)"; ul.appendChild(li); }
@@ -657,8 +665,9 @@ function renderMap(recs){
   renderAbroad(abroad, unmapped, recs.length>0, [...unmappedSet]);       /* decides whether the side panel is shown */
   const host=$("mapSvg"), oldSvg=host.querySelector("svg"); if(oldSvg) oldSvg.remove();
   const sc=Math.min((host.clientWidth||430)/MAP_W,(host.clientHeight||440)/MAP_H);
-  const fs=Math.max(12,11.5/sc), rf=Math.max(1,0.85/sc);          /* keep labels readable on small screens */
+  const fs=Math.max(12,(sc<0.6?10.5:11.5)/sc), rf=Math.max(1,0.85/sc);          /* keep labels readable on small screens */
   const svg=se("svg",{viewBox:`0 0 ${MAP_W} ${MAP_H}`,preserveAspectRatio:"xMidYMid meet",role:"img"});
+  host.appendChild(svg);
   for(let lat=10;lat<=35;lat+=5) svg.appendChild(se("line",{x1:0,x2:MAP_W,y1:my(lat),y2:my(lat),stroke:"#DCE4EE","stroke-width":1}));
   for(let lon=70;lon<=95;lon+=5) svg.appendChild(se("line",{y1:0,y2:MAP_H,x1:mx(lon),x2:mx(lon),stroke:"#DCE4EE","stroke-width":1}));
   svg.appendChild(se("path",{d:pathOf(INDIA),fill:"#FFFFFF",stroke:"#A9B7C9","stroke-width":1.4,"stroke-linejoin":"round"}));
@@ -684,6 +693,41 @@ function renderMap(recs){
       if(d<need){ if(d<0.01){ dx=0; dy=-1; d=1; } b.x=kx+dx/d*need; b.y=ky+dy/d*need; }
     });
   }
+  /* ---- city names: work out where every label goes BEFORE drawing, so connector lines can sit underneath the dots ---- */
+  const placed=bubbles.map(b=>({x1:b.x-b.r,x2:b.x+b.r,y1:b.y-b.r,y2:b.y+b.r}));
+  const ringBox={x1:kx-kr,x2:kx+kr,y1:ky-kr,y2:ky+kr};
+  const hit=(a,c)=>!(a.x2<c.x1||a.x1>c.x2||a.y2<c.y1||a.y1>c.y2);
+  const h=fs+4, kBubble=bubbles.some(b=>b.p.name==="Kolkata");
+  const tw=txt=>{ const t=se("text",{"font-size":fs,"font-weight":600},txt); svg.appendChild(t); const w=t.getComputedTextLength?t.getComputedTextLength():txt.length*fs*0.6; t.remove(); return w; };
+  const DIRS=[[1,0,"start"],[-1,0,"end"],[0,-1,"middle"],[0,1,"middle"],[.7071,-.7071,"start"],[.7071,.7071,"start"],[-.7071,-.7071,"end"],[-.7071,.7071,"end"]];
+  const GAPS=[5,22,40,62,86];                                       /* next to the dot first, then further out with a connector line */
+  const labelSpecs=[], leaderSpecs=[];
+  bubbles.slice(0,20).forEach(b=>{
+    const isK=b.p.name==="Kolkata";
+    const text=isK ? "Kolkata, our venue" : b.p.name;
+    const w=tw(text)+6, R=isK ? Math.max(b.r,kr) : b.r;
+    for(const gap of GAPS){
+      let done=false;
+      for(const [ux,uy,anc] of DIRS){
+        const off=R+gap; let x=b.x+ux*off, y=b.y+uy*off, box, ty;
+        if(anc==="start"){ box={x1:x-1,x2:x+w,y1:y-h/2,y2:y+h/2}; ty=y+fs*0.35; }
+        else if(anc==="end"){ box={x1:x-w,x2:x+1,y1:y-h/2,y2:y+h/2}; ty=y+fs*0.35; }
+        else if(uy<0){ box={x1:x-w/2,x2:x+w/2,y1:y-fs,y2:y+4}; ty=y; }
+        else { box={x1:x-w/2,x2:x+w/2,y1:y,y2:y+fs+4}; ty=y+fs; }
+        if(box.x1<2||box.x2>MAP_W-2||box.y1<2||box.y2>MAP_H-2) continue;
+        if(placed.some(q=>hit(q,box)) || (!isK && hit(ringBox,box))) continue;
+        labelSpecs.push({text,x,y:ty,a:anc,fill:isK?"#1F5FA8":"#1E2733"}); placed.push(box);
+        if(gap>GAPS[0]){                                           /* label had to move away: join it to its dot */
+          const nx=Math.min(Math.max(b.x,box.x1),box.x2), ny=Math.min(Math.max(b.y,box.y1),box.y2);
+          const dx=nx-b.x, dy=ny-b.y, d=Math.hypot(dx,dy)||1;
+          if(d>R+3) leaderSpecs.push({x1:b.x+dx/d*R,y1:b.y+dy/d*R,x2:nx,y2:ny});
+        }
+        done=true; break;
+      }
+      if(done) break;
+    }
+  });
+  leaderSpecs.forEach(l=>svg.appendChild(se("line",{x1:l.x1,y1:l.y1,x2:l.x2,y2:l.y2,stroke:"#7D8998","stroke-width":1,"stroke-linecap":"round","pointer-events":"none"})));
   bubbles.forEach(b=>{
     const g=se("g",{});
     g.appendChild(se("title",{},`${b.p.name}: ${b.p.n} of us`));
@@ -694,45 +738,13 @@ function renderMap(recs){
     const f=Math.min(fs,b.r*1.05);
     svg.appendChild(se("text",{x:b.x,y:b.y+f*0.35,"text-anchor":"middle","font-size":f,"font-weight":700,fill:"#1E2733","paint-order":"stroke",stroke:"#F5B800","stroke-width":2.5,"pointer-events":"none"},String(b.p.n)));
   });
-
-  /* city labels with simple collision avoidance */
-  const placed=bubbles.map(b=>({x1:b.x-b.r,x2:b.x+b.r,y1:b.y-b.r,y2:b.y+b.r}));
-  placed.push({x1:kx-kr,x2:kx+kr,y1:ky-kr,y2:ky+kr});
-  const hit=(a,b)=>!(a.x2<b.x1||a.x1>b.x2||a.y2<b.y1||a.y1>b.y2);
-  const label=(txt,x,y,anchor,extra)=>svg.appendChild(se("text",Object.assign({x,y,"text-anchor":anchor,"font-size":fs,"font-weight":600,fill:"#1E2733","paint-order":"stroke",stroke:"#FFFFFF","stroke-width":3,"stroke-linejoin":"round"},extra||{}),txt));
-  const h=fs+4, cw=fs*0.56;
-  const kBubble=bubbles.some(b=>b.p.name==="Kolkata");
-  const ringBox=placed.pop();                                      /* the ring: other cities' labels avoid it, Kolkata's own label may sit beside it */
-  bubbles.slice(0,14).forEach(b=>{
-    const isK=b.p.name==="Kolkata";
-    const text=isK ? "Kolkata, our venue" : b.p.name;
-    const w=text.length*cw+6, R=isK ? Math.max(b.r,kr) : b.r;
-    const cands=[
-      {x:b.x+R+5,y:b.y+fs*0.35,a:"start",box:{x1:b.x+R+3,x2:b.x+R+5+w,y1:b.y-h/2,y2:b.y+h/2}},
-      {x:b.x-R-5,y:b.y+fs*0.35,a:"end",box:{x1:b.x-R-5-w,x2:b.x-R-3,y1:b.y-h/2,y2:b.y+h/2}},
-      {x:b.x,y:b.y-R-5,a:"middle",box:{x1:b.x-w/2,x2:b.x+w/2,y1:b.y-R-5-h,y2:b.y-R-3}},
-      {x:b.x,y:b.y+R+fs+2,a:"middle",box:{x1:b.x-w/2,x2:b.x+w/2,y1:b.y+R+2,y2:b.y+R+fs+6}}
-    ];
-    const d=R*0.78+3;                                               /* crowded spots: also try the four diagonals */
-    cands.push(
-      {x:b.x+d,y:b.y-d,a:"start",box:{x1:b.x+d-1,x2:b.x+d+w,y1:b.y-d-fs,y2:b.y-d+4}},
-      {x:b.x+d,y:b.y+d+fs,a:"start",box:{x1:b.x+d-1,x2:b.x+d+w,y1:b.y+d,y2:b.y+d+fs+4}},
-      {x:b.x-d,y:b.y-d,a:"end",box:{x1:b.x-d-w,x2:b.x-d+1,y1:b.y-d-fs,y2:b.y-d+4}},
-      {x:b.x-d,y:b.y+d+fs,a:"end",box:{x1:b.x-d-w,x2:b.x-d+1,y1:b.y+d,y2:b.y+d+fs+4}}
-    );
-    for(const c of cands){
-      if(c.box.x1<2||c.box.x2>MAP_W-2||c.box.y1<2||c.box.y2>MAP_H-2) continue;
-      if(placed.some(q=>hit(q,c.box)) || (!isK && hit(ringBox,c.box))) continue;
-      label(text,c.x,c.y,c.a,b.p.name==='Kolkata'?{fill:'#1F5FA8'}:null); placed.push(c.box); break;
-    }
-  });
+  const label=(txt,x,y,anchor,fill)=>svg.appendChild(se("text",{x,y,"text-anchor":anchor,"font-size":fs,"font-weight":600,fill,"paint-order":"stroke",stroke:"#FFFFFF","stroke-width":3,"stroke-linejoin":"round"},txt));
+  labelSpecs.forEach(l=>label(l.text,l.x,l.y,l.a,l.fill));
   if(!kBubble){                     /* nobody in Kolkata yet: label the ring itself */
-    const kt="Kolkata, our venue", kw=kt.length*cw+6;
-    if(kx+kr+5+kw<=MAP_W-2) label(kt,kx+kr+5,ky+fs*0.35,"start",{fill:"#1F5FA8"});
-    else label(kt,kx-kr-5,ky+fs*0.35,"end",{fill:"#1F5FA8"});
+    const kt="Kolkata, our venue", kw=tw(kt)+6;
+    if(kx+kr+5+kw<=MAP_W-2) label(kt,kx+kr+5,ky+fs*0.35,"start","#1F5FA8");
+    else label(kt,kx-kr-5,ky+fs*0.35,"end","#1F5FA8");
   }
-
-  host.appendChild(svg);
 }
 
 /* ---------- Overview ---------- */
@@ -869,7 +881,10 @@ TABS.forEach((t,i)=>{
     if(j!==null){ e.preventDefault(); showTab(j?"directory":"snapshot"); TABS[j].focus(); }
   });
 });
-$("nudgeBtn").addEventListener("click",()=>{ showTab("directory"); window.scrollTo({top:$("tabDir").offsetTop-12,behavior:"smooth"}); });
+const goTo=(which,tab)=>{ showTab(which); tab.focus({preventScroll:true}); window.scrollTo({top:tab.offsetTop-12,behavior:"smooth"}); };
+$("nudgeBtn").addEventListener("click",()=>goTo("directory",$("tabDir")));
+$("backBtn").addEventListener("click",()=>goTo("snapshot",$("tabSnap")));
+$("backBtn2").addEventListener("click",()=>goTo("snapshot",$("tabSnap")));
 $("dirQ").addEventListener("input",renderDirectory);
 $("dirCity").addEventListener("change",renderDirectory);
 if(location.hash==="#directory"||location.hash==="#whos-who") showTab("directory");
@@ -917,6 +932,7 @@ let rt; const redraw=()=>{ clearTimeout(rt); rt=setTimeout(()=>renderMap(shown),
 if(window.ResizeObserver) new ResizeObserver(redraw).observe($("mapSvg")); else window.addEventListener("resize",redraw);
 document.addEventListener("visibilitychange",()=>{ if(!document.hidden && Date.now()-lastLoad>60000) load(); });
 tick(); load();
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ if(shown.length) renderMap(shown); });
 setInterval(tick,3600000);
 setInterval(()=>{ if(!document.hidden) load(); },REFRESH_MS);
 </script>
