@@ -62,7 +62,9 @@ function logoFallback(img){
   .vr{width:1px;height:56px;background:var(--line)}
 
   /* hero */
-  .hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;padding:36px 20px;align-items:stretch}
+  .hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:0 40px;padding:36px 20px;align-items:stretch}
+  .hero-left{grid-row:1;grid-column:1}
+  .mapcol{grid-row:1;grid-column:2}
   h1{font-size:clamp(30px,4vw,46px);line-height:1.12;margin:0 0 14px;font-weight:700;max-width:16em}
   .hero-left{display:flex;flex-direction:column;justify-content:space-between;gap:28px;min-width:0}
   .batch{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0}
@@ -80,12 +82,13 @@ function logoFallback(img){
   .mapsvg{position:relative;flex:1;min-width:0}
   .mapsvg svg{position:absolute;inset:0;display:block;width:100%;height:100%}
   .mapsvg text{font-family:var(--sans)}
-  .abroad{flex:none;width:210px;padding:18px 16px;border-left:1px solid #C9D3E0;background:rgba(255,255,255,.55);overflow:auto}
-  .abroad h3{margin:0 0 10px;font:700 15px/1.3 var(--sans)}
-  .abroad ul{list-style:none;margin:0;padding:0}
-  .abroad li{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:14px}
+  /* "Outside India": a strip directly under the map, so the map itself gets the full column width */
+  .abroad{grid-row:2;grid-column:2;margin-top:12px;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 22px;padding:10px 16px;background:#fff;border:1px solid var(--line);border-radius:6px}
+  .abroad h3{margin:0;font:700 15px/1.3 var(--sans)}
+  .abroad ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:2px 22px}
+  .abroad li{display:flex;align-items:center;gap:10px;padding:3px 0;font-size:14px}
   .abroad .n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--taxi);border:1.6px solid var(--ink);font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
-  .abroad p{margin:0 0 8px;color:var(--muted);font-size:13.5px}
+  .abroad p{margin:0;color:var(--muted);font-size:13.5px}
   .maplegend{position:absolute;top:12px;right:12px;z-index:2;margin:0;padding:6px 10px;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:4px;font-size:12.5px;line-height:1.55;color:var(--muted)}
   .maplegend span{display:block}
   .dot,.ring{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:-1px;margin-right:7px}
@@ -178,8 +181,12 @@ function logoFallback(img){
     .mapsvg{flex:none;width:100%;aspect-ratio:540/560}
     .maplegend{top:8px;right:8px;padding:5px 8px;font-size:11.5px}
     .hero-left{gap:20px}
-    .abroad{width:auto;border-left:0;border-top:1px solid #C9D3E0}
-    .abroad ul{display:flex;flex-wrap:wrap;gap:4px 20px}
+    .hero-left,.mapcol,.abroad{grid-column:1;grid-row:auto}
+    .abroad{display:block;margin-top:0;padding:18px 16px;border-top:1px solid #C9D3E0;border-radius:0 0 6px 6px;background:rgba(255,255,255,.55)}
+    .abroad h3{margin:0 0 10px}
+    .abroad p{margin:0 0 8px}
+    .abroad ul{gap:4px 20px}
+    .hero.has-abroad .mapbox{border-bottom:0;border-radius:6px 6px 0 0}
     .grid{grid-template-columns:1fr;gap:34px}
     .row{grid-template-columns:minmax(100px,40%) 1fr 30px}
     .row.dom{grid-template-columns:minmax(100px,34%) 1fr 112px}
@@ -248,9 +255,9 @@ function logoFallback(img){
       <div class="mapsvg" id="mapSvg">
         <p class="maplegend"><span><i class="dot"></i>City (bigger circle, more members)</span><span><i class="ring"></i>Kolkata, where we meet</span></p>
       </div>
-      <aside class="abroad" id="abroad" aria-label="Members based outside India"></aside>
     </div>
   </div>
+  <aside class="abroad" id="abroad" aria-label="Members based outside India"></aside>
 </header>
 
 <div class="wrap intro">
@@ -618,7 +625,8 @@ function bars(el, entries, opts){
 const INDIA = [[73.6,35.6],[74.4,36.9],[75.6,37.0],[76.8,35.9],[77.8,35.5],[78.9,35.5],[80.3,35.2],[79.9,34.2],[79.2,33.1],[78.8,32.3],[78.6,31.6],[79.1,31.0],[80.2,30.3],[80.9,30.1],[81.0,29.7],[80.3,29.1],[80.1,28.8],[81.0,28.3],[82.0,27.9],[83.3,27.4],[84.6,27.1],[85.8,26.6],[87.3,26.4],[88.1,26.4],[88.2,27.0],[88.1,27.9],[88.9,28.1],[88.9,27.3],[88.8,26.9],[89.8,26.7],[91.0,26.8],[92.0,26.9],[91.7,27.8],[92.7,28.0],[93.6,28.7],[95.1,29.3],[96.1,29.4],[97.3,28.3],[98.0,27.6],[97.4,27.0],[96.3,27.2],[96.0,26.5],[95.3,26.0],[94.6,25.2],[94.6,24.0],[94.0,23.0],[93.4,22.8],[93.1,22.3],[92.9,23.3],[92.4,23.6],[91.6,23.0],[91.3,24.1],[92.2,24.5],[91.6,25.1],[90.3,25.2],[89.9,25.5],[89.8,26.0],[89.0,26.4],[88.5,26.3],[88.4,25.8],[88.2,25.3],[88.4,24.6],[88.7,24.2],[88.7,23.5],[89.0,22.9],[88.9,21.9],[88.4,21.6],[87.2,21.5],[86.9,20.9],[86.7,20.3],[85.9,19.8],[85.0,19.2],[84.2,18.4],[83.3,17.6],[82.3,16.6],[81.3,16.2],[80.4,15.8],[80.1,14.4],[80.3,13.3],[80.1,12.4],[79.8,11.9],[79.8,10.9],[79.3,10.3],[79.3,9.2],[78.2,8.9],[77.6,8.1],[77.0,8.4],[76.4,9.4],[75.9,11.0],[75.0,12.5],[74.7,13.8],[74.1,15.0],[73.8,16.0],[73.3,17.6],[72.8,19.0],[72.7,20.5],[72.8,21.2],[72.5,22.2],[72.1,21.8],[71.3,20.9],[70.4,20.7],[69.1,22.0],[69.9,22.4],[70.4,22.9],[69.5,22.8],[68.6,23.1],[68.2,23.8],[69.0,24.3],[70.4,24.2],[71.1,24.4],[70.1,25.1],[70.0,26.0],[69.6,26.9],[70.6,28.0],[71.9,27.9],[72.9,29.0],[73.4,29.9],[74.4,31.0],[74.6,31.7],[75.0,32.4],[75.3,32.9],[74.6,33.1],[74.0,33.6],[74.0,34.2],[73.5,34.9]];
 const ISLANDS = [[[92.3,13.4],[93.0,13.5],[93.1,12.0],[92.9,10.8],[92.5,11.3]],[[93.6,8.9],[93.9,7.2],[93.5,6.9],[93.4,8.0]]];
 const MAP_W=540, MAP_H=560, MS=17.4, MKX=0.927, MX0=22, MY0=14, MLON0=68, MLAT0=37.4;
-const mx=lon=>MX0+(lon-MLON0)*MS*MKX, my=lat=>MY0+(MLAT0-lat)*MS;
+let MAP_OX=0;                                                        /* sideways shift that keeps India centred when the box is wider than the drawing */
+const mx=lon=>MX0+MAP_OX+(lon-MLON0)*MS*MKX, my=lat=>MY0+(MLAT0-lat)*MS;
 const SVGNS="http://www.w3.org/2000/svg";
 function se(name,attrs,text){
   const e=document.createElementNS(SVGNS,name);
@@ -645,6 +653,7 @@ function renderAbroad(abroad, unmapped, hasData, unmappedNames){
   }
   if(unmapped){ const p=document.createElement("p"); p.style.marginTop="10px"; const nm=(unmappedNames||[]); p.textContent=`Not placed on the map (city not recognised): ${nm.slice(0,4).join(", ")}${nm.length>4?" and "+(nm.length-4)+" more":""}.`; box.appendChild(p); }
   box.hidden = !(ab.length || unmapped);
+  document.querySelector("header.hero").classList.toggle("has-abroad", !box.hidden);
 }
 
 let shown=[];
@@ -658,11 +667,13 @@ function renderMap(recs){
   });
   renderAbroad(abroad, unmapped, recs.length>0, [...unmappedSet]);       /* decides whether the side panel is shown */
   const host=$("mapSvg"), oldSvg=host.querySelector("svg"); if(oldSvg) oldSvg.remove();
-  const sc=Math.min((host.clientWidth||430)/MAP_W,(host.clientHeight||440)/MAP_H);
+  const W=Math.min(Math.round(MAP_W*1.6),Math.max(MAP_W,Math.round(MAP_H*(host.clientWidth||MAP_W)/(host.clientHeight||MAP_H))));   /* drawing as wide as the box: room for names on both sides */
+  MAP_OX=(W-MAP_W)/2;
+  const sc=Math.min((host.clientWidth||430)/W,(host.clientHeight||440)/MAP_H);
   const fs=Math.max(12,(sc<0.6?10.5:11.5)/sc), rf=Math.max(1,0.85/sc);          /* keep labels readable on small screens */
-  const svg=se("svg",{viewBox:`0 0 ${MAP_W} ${MAP_H}`,preserveAspectRatio:"xMidYMid meet",role:"img"});
+  const svg=se("svg",{viewBox:`0 0 ${W} ${MAP_H}`,preserveAspectRatio:"xMidYMid meet",role:"img"});
   host.appendChild(svg);
-  for(let lat=10;lat<=35;lat+=5) svg.appendChild(se("line",{x1:0,x2:MAP_W,y1:my(lat),y2:my(lat),stroke:"#DCE4EE","stroke-width":1}));
+  for(let lat=10;lat<=35;lat+=5) svg.appendChild(se("line",{x1:0,x2:W,y1:my(lat),y2:my(lat),stroke:"#DCE4EE","stroke-width":1}));
   for(let lon=70;lon<=95;lon+=5) svg.appendChild(se("line",{y1:0,y2:MAP_H,x1:mx(lon),x2:mx(lon),stroke:"#DCE4EE","stroke-width":1}));
   svg.appendChild(se("path",{d:pathOf(INDIA),fill:"#FFFFFF",stroke:"#A9B7C9","stroke-width":1.4,"stroke-linejoin":"round"}));
   ISLANDS.forEach(i=>svg.appendChild(se("path",{d:pathOf(i),fill:"#FFFFFF",stroke:"#A9B7C9","stroke-width":1.2})));
@@ -706,7 +717,7 @@ function renderMap(recs){
       else if(anc==="end"){ box={x1:x-w,x2:x+1,y1:y-h/2,y2:y+h/2}; ty=y+fs*0.35; }
       else if(uy<0){ box={x1:x-w/2,x2:x+w/2,y1:y-fs,y2:y+4}; ty=y; }
       else { box={x1:x-w/2,x2:x+w/2,y1:y,y2:y+fs+4}; ty=y+fs; }
-      if(box.x1<2||box.x2>MAP_W-2||box.y1<2||box.y2>MAP_H-2) return false;
+      if(box.x1<2||box.x2>W-2||box.y1<2||box.y2>MAP_H-2) return false;
       if(placed.some(q=>hit(q,box)) || (!isK && hit(ringBox,box))) return false;
       labelSpecs.push({text,x,y:ty,a:anc,fill:isK?"#1F5FA8":"#1E2733"}); placed.push(box);
       if(gap>GAPS[0]){                                             /* the name had to move away: join it to its dot */
@@ -736,7 +747,7 @@ function renderMap(recs){
   labelSpecs.forEach(l=>label(l.text,l.x,l.y,l.a,l.fill));
   if(!kBubble){                     /* nobody in Kolkata yet: label the ring itself */
     const kt="Kolkata, our venue", kw=tw(kt)+6;
-    if(kx+kr+5+kw<=MAP_W-2) label(kt,kx+kr+5,ky+fs*0.35,"start","#1F5FA8");
+    if(kx+kr+5+kw<=W-2) label(kt,kx+kr+5,ky+fs*0.35,"start","#1F5FA8");
     else label(kt,kx-kr-5,ky+fs*0.35,"end","#1F5FA8");
   }
 }
