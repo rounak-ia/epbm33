@@ -495,9 +495,6 @@ const COUNTRY = {"Dubai":"UAE","Abu Dhabi":"UAE","Sharjah":"UAE","Singapore":"Si
   "Frankfurt":"Germany","Munich":"Germany","Berlin":"Germany","Amsterdam":"Netherlands","Paris":"France","Dublin":"Ireland","Zurich":"Switzerland","Stockholm":"Sweden",
   "Seattle":"USA","Dallas":"USA","Houston":"USA","Chicago":"USA","Austin":"USA","Boston":"USA","Los Angeles":"USA","Atlanta":"USA",
   "Dhaka":"Bangladesh","Kathmandu":"Nepal","Colombo":"Sri Lanka","Johannesburg":"South Africa","Fergana":"Uzbekistan","Tashkent":"Uzbekistan"};
-const MAP_GROUP = {"Gurugram":"Delhi NCR","Noida":"Delhi NCR","Ghaziabad":"Delhi NCR","Faridabad":"Delhi NCR","Delhi":"Delhi NCR","Sonipat":"Delhi NCR",
-  "Navi Mumbai":"Mumbai","Thane":"Mumbai","Mohali":"Chandigarh","Panchkula":"Chandigarh","Howrah":"Kolkata"};
-const GROUP_POS = {"Delhi NCR":[28.6139,77.2090]};
 
 function lookupCity(s){
   if(CITY_INDEX[s]) return CITY_INDEX[s];
@@ -657,10 +654,7 @@ function renderMap(recs){
     const c=r.city; if(!c) return;
     if(c.lat===null){ unmapped++; unmappedSet.add(c.name); return; }
     if(INTL.has(c.name)){ abroad.set(c.name,(abroad.get(c.name)||0)+1); return; }
-    const g=MAP_GROUP[c.name]||c.name;
-    const idx=CITY_INDEX[g.toLowerCase()];
-    const pos=idx?[idx[1],idx[2]]:(GROUP_POS[g]||[c.lat,c.lon]);
-    const e=inIndia.get(g)||{name:g,lat:pos[0],lon:pos[1],n:0}; e.n++; inIndia.set(g,e);
+    const e=inIndia.get(c.name)||{name:c.name,lat:c.lat,lon:c.lon,n:0}; e.n++; inIndia.set(c.name,e);        /* one dot per city */
   });
   renderAbroad(abroad, unmapped, recs.length>0, [...unmappedSet]);       /* decides whether the side panel is shown */
   const host=$("mapSvg"), oldSvg=host.querySelector("svg"); if(oldSvg) oldSvg.remove();
@@ -700,32 +694,32 @@ function renderMap(recs){
   const h=fs+4, kBubble=bubbles.some(b=>b.p.name==="Kolkata");
   const tw=txt=>{ const t=se("text",{"font-size":fs,"font-weight":600},txt); svg.appendChild(t); const w=t.getComputedTextLength?t.getComputedTextLength():txt.length*fs*0.6; t.remove(); return w; };
   const DIRS=[[1,0,"start"],[-1,0,"end"],[0,-1,"middle"],[0,1,"middle"],[.7071,-.7071,"start"],[.7071,.7071,"start"],[-.7071,-.7071,"end"],[-.7071,.7071,"end"]];
-  const GAPS=[5,22,40,62,86];                                       /* next to the dot first, then further out with a connector line */
+  const GAPS=[5,22,40,62,86,112,140];                                       /* next to the dot first, then further out with a connector line */
   const labelSpecs=[], leaderSpecs=[];
   bubbles.slice(0,20).forEach(b=>{
     const isK=b.p.name==="Kolkata";
     const text=isK ? "Kolkata, our venue" : b.p.name;
     const w=tw(text)+6, R=isK ? Math.max(b.r,kr) : b.r;
-    for(const gap of GAPS){
-      let done=false;
-      for(const [ux,uy,anc] of DIRS){
-        const off=R+gap; let x=b.x+ux*off, y=b.y+uy*off, box, ty;
-        if(anc==="start"){ box={x1:x-1,x2:x+w,y1:y-h/2,y2:y+h/2}; ty=y+fs*0.35; }
-        else if(anc==="end"){ box={x1:x-w,x2:x+1,y1:y-h/2,y2:y+h/2}; ty=y+fs*0.35; }
-        else if(uy<0){ box={x1:x-w/2,x2:x+w/2,y1:y-fs,y2:y+4}; ty=y; }
-        else { box={x1:x-w/2,x2:x+w/2,y1:y,y2:y+fs+4}; ty=y+fs; }
-        if(box.x1<2||box.x2>MAP_W-2||box.y1<2||box.y2>MAP_H-2) continue;
-        if(placed.some(q=>hit(q,box)) || (!isK && hit(ringBox,box))) continue;
-        labelSpecs.push({text,x,y:ty,a:anc,fill:isK?"#1F5FA8":"#1E2733"}); placed.push(box);
-        if(gap>GAPS[0]){                                           /* label had to move away: join it to its dot */
-          const nx=Math.min(Math.max(b.x,box.x1),box.x2), ny=Math.min(Math.max(b.y,box.y1),box.y2);
-          const dx=nx-b.x, dy=ny-b.y, d=Math.hypot(dx,dy)||1;
-          if(d>R+3) leaderSpecs.push({x1:b.x+dx/d*R,y1:b.y+dy/d*R,x2:nx,y2:ny});
-        }
-        done=true; break;
+    const tryAt=(ux,uy,anc,gap)=>{                                  /* put the name at this spot if it is free */
+      const off=R+gap; const x=b.x+ux*off, y=b.y+uy*off; let box, ty;
+      if(anc==="start"){ box={x1:x-1,x2:x+w,y1:y-h/2,y2:y+h/2}; ty=y+fs*0.35; }
+      else if(anc==="end"){ box={x1:x-w,x2:x+1,y1:y-h/2,y2:y+h/2}; ty=y+fs*0.35; }
+      else if(uy<0){ box={x1:x-w/2,x2:x+w/2,y1:y-fs,y2:y+4}; ty=y; }
+      else { box={x1:x-w/2,x2:x+w/2,y1:y,y2:y+fs+4}; ty=y+fs; }
+      if(box.x1<2||box.x2>MAP_W-2||box.y1<2||box.y2>MAP_H-2) return false;
+      if(placed.some(q=>hit(q,box)) || (!isK && hit(ringBox,box))) return false;
+      labelSpecs.push({text,x,y:ty,a:anc,fill:isK?"#1F5FA8":"#1E2733"}); placed.push(box);
+      if(gap>GAPS[0]){                                             /* the name had to move away: join it to its dot */
+        const nx=Math.min(Math.max(b.x,box.x1),box.x2), ny=Math.min(Math.max(b.y,box.y1),box.y2);
+        const dx=nx-b.x, dy=ny-b.y, d=Math.hypot(dx,dy)||1;
+        if(d>R+3) leaderSpecs.push({x1:b.x+dx/d*R,y1:b.y+dy/d*R,x2:nx,y2:ny});
       }
-      if(done) break;
-    }
+      return true;
+    };
+    for(const gap of GAPS) for(const [ux,uy,anc] of DIRS) if(tryAt(ux,uy,anc,gap)) return;
+    /* boxed in: sweep all the way round the dot, ever further out, until a free spot turns up */
+    for(let gap=GAPS[GAPS.length-1]+14; gap<=300; gap+=14)
+      for(let k=0;k<16;k++){ const ang=k*Math.PI/8, ux=Math.cos(ang), uy=Math.sin(ang); if(tryAt(ux,uy,ux>0.35?"start":ux<-0.35?"end":"middle",gap)) return; }
   });
   leaderSpecs.forEach(l=>svg.appendChild(se("line",{x1:l.x1,y1:l.y1,x2:l.x2,y2:l.y2,stroke:"#7D8998","stroke-width":1,"stroke-linecap":"round","pointer-events":"none"})));
   bubbles.forEach(b=>{
