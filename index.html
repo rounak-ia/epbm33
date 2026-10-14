@@ -437,7 +437,7 @@ const CITY_LIST = [
   ["Delhi",28.6139,77.2090,["new delhi","delhi ncr","ncr","south delhi","north delhi"]],["Gurugram",28.4595,77.0266,["gurgaon","manesar"]],
   ["Noida",28.5355,77.3910,["greater noida"]],["Ghaziabad",28.6692,77.4538,[]],["Faridabad",28.4089,77.3178,[]],
   ["Hyderabad",17.3850,78.4867,["hyd","secunderabad"]],["Chennai",13.0827,80.2707,["madras"]],
-  ["Kolkata",22.5726,88.3639,["calcutta","kolkatta"]],["Pune",18.5204,73.8567,["poona"]],
+  ["Kolkata",22.5726,88.3639,["calcutta","kolkatta","bidhannagar","rajarhat","dum dum"]],["Pune",18.5204,73.8567,["poona"]],
   ["Ahmedabad",23.0225,72.5714,["gandhinagar"]],["Jaipur",26.9124,75.7873,[]],["Lucknow",26.8467,80.9462,[]],
   ["Kanpur",26.4499,80.3319,[]],["Chandigarh",30.7333,76.7794,[]],["Mohali",30.7046,76.7179,[]],["Panchkula",30.6942,76.8606,[]],
   ["Indore",22.7196,75.8577,[]],["Bhopal",23.2599,77.4126,[]],["Nagpur",21.1458,79.0882,[]],["Surat",21.1702,72.8311,[]],
@@ -477,6 +477,8 @@ const CITY_LIST = [
   ["Panipat",29.3909,76.9635,[]],["Sonipat",28.9931,77.0151,[]],["Rohtak",28.8955,76.6066,[]],["Karnal",29.6857,76.9905,[]],
   ["Jalandhar",31.3260,75.5762,[]],["Patiala",30.3398,76.3869,[]],["Baddi",30.9578,76.7914,[]],["Bhilai",21.1938,81.3509,[]],
   ["Vapi",20.3893,72.9106,[]],["Bharuch",21.7051,72.9959,[]],
+  ["Kalyani",22.9750,88.4345,[]],["Barrackpore",22.7660,88.3770,[]],["Barasat",22.7220,88.4800,[]],["Serampore",22.7510,88.3410,["srirampore"]],
+  ["Fergana",40.3842,71.7843,["fergana uzbekistan","ferghana","fergana city"]],["Tashkent",41.2995,69.2401,[]],
   ["Los Angeles",34.0522,-118.2437,["la"]],["Atlanta",33.7490,-84.3880,[]],["Sharjah",25.3463,55.4209,[]],["Manama",26.2285,50.5860,[]],
   ["Jeddah",21.4858,39.1925,[]],["Berlin",52.5200,13.4050,[]],["Stockholm",59.3293,18.0686,[]],["Johannesburg",-26.2041,28.0473,[]],
   ["Auckland",-36.8485,174.7633,[]],["Perth",-31.9505,115.8605,[]],["Vancouver",49.2827,-123.1207,[]],["Seoul",37.5665,126.9780,[]],
@@ -484,15 +486,23 @@ const CITY_LIST = [
 ];
 const CITY_INDEX = {};
 CITY_LIST.forEach(c => { CITY_INDEX[c[0].toLowerCase()] = c; c[3].forEach(a => CITY_INDEX[a] = c); });
-const INTL = new Set(["Dubai","Abu Dhabi","Singapore","London","New York","San Francisco","Toronto","Sydney","Melbourne","Doha","Riyadh","Muscat","Kuwait City","Hong Kong","Tokyo","Frankfurt","Amsterdam","Paris","Dublin","Kuala Lumpur","Bangkok","Seattle","Dallas","Houston","Chicago","Austin","Boston","Zurich","Munich","Dhaka","Kathmandu","Colombo","Los Angeles","Atlanta","Sharjah","Manama","Jeddah","Berlin","Stockholm","Johannesburg","Auckland","Perth","Vancouver","Seoul","Shanghai","Beijing","Jakarta","Manila"]);
+const INTL = new Set(["Dubai","Abu Dhabi","Singapore","London","New York","San Francisco","Toronto","Sydney","Melbourne","Doha","Riyadh","Muscat","Kuwait City","Hong Kong","Tokyo","Frankfurt","Amsterdam","Paris","Dublin","Kuala Lumpur","Bangkok","Seattle","Dallas","Houston","Chicago","Austin","Boston","Zurich","Munich","Dhaka","Kathmandu","Colombo","Los Angeles","Atlanta","Sharjah","Manama","Jeddah","Berlin","Stockholm","Johannesburg","Auckland","Perth","Vancouver","Seoul","Shanghai","Beijing","Jakarta","Manila","Fergana","Tashkent"]);
 const MAP_GROUP = {"Gurugram":"Delhi NCR","Noida":"Delhi NCR","Ghaziabad":"Delhi NCR","Faridabad":"Delhi NCR","Delhi":"Delhi NCR","Sonipat":"Delhi NCR",
-  "Navi Mumbai":"Mumbai","Thane":"Mumbai","Mohali":"Chandigarh","Panchkula":"Chandigarh","Howrah":"Kolkata"};
+  "Navi Mumbai":"Mumbai","Thane":"Mumbai","Mohali":"Chandigarh","Panchkula":"Chandigarh","Howrah":"Kolkata","Kalyani":"Kolkata","Barrackpore":"Kolkata","Barasat":"Kolkata","Serampore":"Kolkata"};
 const GROUP_POS = {"Delhi NCR":[28.6139,77.2090]};
 
+function lookupCity(s){
+  if(CITY_INDEX[s]) return CITY_INDEX[s];
+  const w=s.split(" ");
+  for(let k=1;k<=Math.min(3,w.length-1);k++){                         /* drop trailing state / country words */
+    const hit=CITY_INDEX[w.slice(0,w.length-k).join(" ")]; if(hit) return hit;
+  }
+  return null;
+}
 function canonCity(raw){
   const s=(raw||"").toLowerCase().split(/\s+-\s+|[,\/(]/)[0].replace(/\./g,"").replace(/-/g," ").replace(/\s+/g," ").trim();
   if(!s) return null;
-  const hit=CITY_INDEX[s];
+  const hit=lookupCity(s);
   return hit ? {name:hit[0],lat:hit[1],lon:hit[2]} : {name:titleCase(s),lat:null,lon:null};
 }
 
@@ -525,13 +535,21 @@ function toRecords(rows){
 }
 
 /* Directory tab column order: name, email, phone, LinkedIn, organisation, designation, profession, city, domain */
+/* invisible characters that phones and chat apps add when copying (zero-width spaces, the hidden "emoji marker" after (R), soft hyphens) */
+const INVISIBLE=/[\u200B-\u200F\u2060\uFEFF\uFE00-\uFE0F\u00AD\u202A-\u202E]/g;
 function safeLinkedIn(u){
-  u=(u||"").replace(/\s+/g,""); if(!u) return null;
+  u=(u||"").replace(INVISIBLE,"").replace(/\s+/g,""); if(!u) return null;
   if(!/^https?:\/\//i.test(u)) u="https://"+u.replace(/^\/+/,"");
-  try{ const x=new URL(u); if(/(^|\.)linkedin\.com$/i.test(x.hostname)) return "https://www.linkedin.com"+x.pathname.replace(/\/+$/,""); }catch(e){}
+  try{
+    const x=new URL(u);
+    if(!/(^|\.)linkedin\.com$/i.test(x.hostname)) return null;
+    let path=x.pathname.replace(/\/+$/,"");
+    if(/^\/in\/[^\/]+$/.test(path)) path+="/";                      /* LinkedIn's own form of a profile address ends in a slash */
+    return "https://www.linkedin.com"+path;
+  }catch(e){}
   return null;
 }
-function safeEmail(e){ e=(e||"").trim(); return /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(e) ? e : null; }
+function safeEmail(e){ e=(e||"").replace(INVISIBLE,"").trim(); return /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(e) ? e : null; }
 function phoneDigits(p){ return (p||"").replace(/\D/g,"").length; }
 function safeTel(p){
   /* link target only; the text shown on the page is always exactly what the member typed */
@@ -605,7 +623,7 @@ function se(name,attrs,text){
 }
 function pathOf(poly){ return poly.map((p,i)=>(i?"L":"M")+mx(p[0]).toFixed(1)+" "+my(p[1]).toFixed(1)).join("")+"Z"; }
 
-function renderAbroad(abroad, unmapped, hasData){
+function renderAbroad(abroad, unmapped, hasData, unmappedNames){
   const box=$("abroad"); box.innerHTML="";
   const h=document.createElement("h3"); h.textContent="Outside India"; box.appendChild(h);
   const ab=[...abroad.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
@@ -620,23 +638,23 @@ function renderAbroad(abroad, unmapped, hasData){
     if(ab.length>9){ const li=document.createElement("li"); li.textContent=`${ab.length-9} more cities (${ab.slice(9).reduce((s,e)=>s+e[1],0)})`; li.style.color="var(--muted)"; ul.appendChild(li); }
     box.appendChild(ul);
   }
-  if(unmapped){ const p=document.createElement("p"); p.style.marginTop="10px"; p.textContent=`${unmapped} not placed on the map (city not recognised).`; box.appendChild(p); }
+  if(unmapped){ const p=document.createElement("p"); p.style.marginTop="10px"; const nm=(unmappedNames||[]); p.textContent=`Not placed on the map (city not recognised): ${nm.slice(0,4).join(", ")}${nm.length>4?" and "+(nm.length-4)+" more":""}.`; box.appendChild(p); }
   box.hidden = !(ab.length || unmapped);
 }
 
 let shown=[];
 function renderMap(recs){
-  const inIndia=new Map(), abroad=new Map(); let unmapped=0;
+  const inIndia=new Map(), abroad=new Map(), unmappedSet=new Set(); let unmapped=0;
   recs.forEach(r=>{
     const c=r.city; if(!c) return;
-    if(c.lat===null){ unmapped++; return; }
+    if(c.lat===null){ unmapped++; unmappedSet.add(c.name); return; }
     if(INTL.has(c.name)){ abroad.set(c.name,(abroad.get(c.name)||0)+1); return; }
     const g=MAP_GROUP[c.name]||c.name;
     const idx=CITY_INDEX[g.toLowerCase()];
     const pos=idx?[idx[1],idx[2]]:(GROUP_POS[g]||[c.lat,c.lon]);
     const e=inIndia.get(g)||{name:g,lat:pos[0],lon:pos[1],n:0}; e.n++; inIndia.set(g,e);
   });
-  renderAbroad(abroad, unmapped, recs.length>0);       /* decides whether the side panel is shown */
+  renderAbroad(abroad, unmapped, recs.length>0, [...unmappedSet]);       /* decides whether the side panel is shown */
   const host=$("mapSvg"), oldSvg=host.querySelector("svg"); if(oldSvg) oldSvg.remove();
   const sc=Math.min((host.clientWidth||430)/MAP_W,(host.clientHeight||440)/MAP_H);
   const fs=Math.max(12,11.5/sc), rf=Math.max(1,0.85/sc);          /* keep labels readable on small screens */
@@ -690,6 +708,13 @@ function renderMap(recs){
       {x:b.x,y:b.y-R-5,a:"middle",box:{x1:b.x-w/2,x2:b.x+w/2,y1:b.y-R-5-h,y2:b.y-R-3}},
       {x:b.x,y:b.y+R+fs+2,a:"middle",box:{x1:b.x-w/2,x2:b.x+w/2,y1:b.y+R+2,y2:b.y+R+fs+6}}
     ];
+    const d=R*0.78+3;                                               /* crowded spots: also try the four diagonals */
+    cands.push(
+      {x:b.x+d,y:b.y-d,a:"start",box:{x1:b.x+d-1,x2:b.x+d+w,y1:b.y-d-fs,y2:b.y-d+4}},
+      {x:b.x+d,y:b.y+d+fs,a:"start",box:{x1:b.x+d-1,x2:b.x+d+w,y1:b.y+d,y2:b.y+d+fs+4}},
+      {x:b.x-d,y:b.y-d,a:"end",box:{x1:b.x-d-w,x2:b.x-d+1,y1:b.y-d-fs,y2:b.y-d+4}},
+      {x:b.x-d,y:b.y+d+fs,a:"end",box:{x1:b.x-d-w,x2:b.x-d+1,y1:b.y+d,y2:b.y+d+fs+4}}
+    );
     for(const c of cands){
       if(c.box.x1<2||c.box.x2>MAP_W-2||c.box.y1<2||c.box.y2>MAP_H-2) continue;
       if(placed.some(q=>hit(q,c.box)) || (!isK && hit(ringBox,c.box))) continue;
